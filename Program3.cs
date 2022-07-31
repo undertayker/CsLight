@@ -8,14 +8,14 @@ namespace Exercise1
         {
 
             int allPictures = 52;
-            int pictures;
-            pictures = allPictures;
+            int usedPictures;
+            usedPictures = allPictures;
             int picturesInRow = 3;
-            int falledRow = pictures / picturesInRow;
-            pictures -= falledRow * picturesInRow;
+            int falledRow = usedPictures / picturesInRow;
+            usedPictures = falledRow % picturesInRow;
 
             Console.WriteLine($"Заполняных рядов : {falledRow}");
-            Console.WriteLine($"Сверх меры : {pictures}");
+            Console.WriteLine($"Сверх меры : {usedPictures}");
         }
     }
 } 
