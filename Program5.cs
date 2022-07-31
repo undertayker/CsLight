@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Exercise_7
+namespace Exercise
 {
-    class Program6
+    class Program
     {
         static void Main(string[] args)
         {
