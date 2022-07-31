@@ -14,7 +14,7 @@ namespace Exercise
             Console.WriteLine("Сколько хотите купить кристалов?");
             int numberOfCrystals = int.Parse(Console.ReadLine());
 
-            gold = priceOfCrystal % numberOfCrystals;
+            gold -= priceOfCrystal * numberOfCrystals;
             Console.WriteLine($"Осталось золота : {gold}");
             Console.WriteLine($"куплено кристалов : {numberOfCrystals}");
         } 
