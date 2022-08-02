@@ -13,18 +13,17 @@ namespace CSLight
 
             string userMessage;
             int userInput;
-            int numberOfRepetitions;
+            int countOfRepetitions;
 
             Console.WriteLine("Введите ваше сообщение: ");
             userMessage = Console.ReadLine();
             Console.WriteLine("Введите кол-во повторений вашего сообщения: ");
-            numberOfRepetitions = Convert.ToInt32(Console.ReadLine());
+            countOfRepetitions = Convert.ToInt32(Console.ReadLine());
 
-            while (numberOfRepetitions > 0 )
+            for (countOfRepetitions = 0; countOfRepetitions < 10; countOfRepetitions ++ )
             {
-                Console.WriteLine(userMessage);
-                numberOfRepetitions--;               
-            }
+                Console.WriteLine(countOfRepetitions);
+            }                                                       
         }
     }
 }
