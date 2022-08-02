@@ -12,17 +12,16 @@ namespace CSLight
         {
 
             string userMessage;
-            int userInput;
+            int userInput = 10;
             int countOfRepetitions;
 
-            Console.WriteLine("Введите ваше сообщение: ");
-            userMessage = Console.ReadLine();
             Console.WriteLine("Введите кол-во повторений вашего сообщения: ");
             countOfRepetitions = Convert.ToInt32(Console.ReadLine());
 
-            for (countOfRepetitions = 0; countOfRepetitions < 10; countOfRepetitions ++ )
+            for (int i = 0; i < countOfRepetitions ; i ++ )
             {
-                Console.WriteLine(countOfRepetitions);
+                Console.WriteLine("Введите ваше сообщение: ");
+                userMessage = Console.ReadLine();
             }                                                       
         }
     }
