@@ -10,29 +10,19 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            int tryCount = 1000;
-            string exit = "exit";
-            string userInput;
+    
+            string exit = "";
 
             Console.WriteLine("вы попали ко мне в лавушку, из нее нет выхода, только если вы не знаете секретного пароля");
             Console.WriteLine("Введите секретный пароль для выхода отсюда :");
+            Console.ReadLine();
 
-            for (int i = 0; i < tryCount; i++)
+            while (exit != "exit")
             {
-                
-                userInput = Console.ReadLine();
-                
-                if(exit == userInput)
-                {
-                    Console.WriteLine("Нееет, как ты смог угадать ");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("ХА ХА ХА вам не удалось угадать, попробуйте еще раз :");
-                }
+                Console.WriteLine("ХА ХА ХА, вы не угадали попробуйте еще раз");
+                exit = Console.ReadLine();
             }
-        }    
+        }
     }
 }
 
