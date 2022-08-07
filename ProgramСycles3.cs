@@ -10,14 +10,13 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-
-            int beginning = 5;
-            int end = 100;
+            int startValue = 5;
+            int lastValue = 96;
             int step = 7;
 
-            for (int i = beginning; i < end; i += step)
+            for (int i = startValue; i < lastValue + step ; i += step)
             {
-                Console.WriteLine(i);
+                Console.WriteLine(i);              
             }
         }
     }
