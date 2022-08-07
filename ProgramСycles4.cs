@@ -16,7 +16,7 @@ namespace CSLight
             int multiple1 = 3;
             int multiple2 = 5;
             int amount = 0;
-            Console.WriteLine("Числа кратные 3 или 5 : ");
+            Console.WriteLine("Числа кратные " + multiple1 + " или " + multiple2 );
 
             for (int i = 0; i < number; i++)
                 if (i % multiple1 == 0 || i % multiple2 == 0)
