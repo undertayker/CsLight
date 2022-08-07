@@ -10,17 +10,16 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            Random rand = new Random();
+            Random random = new Random();
 
-            int number;
-            number = rand.Next(0, 100);
-            int amount = number;
+            int number = random.Next(0, 100);
+            int minimumMultiple = 3;
+            int maximumMultiple = 5;
+            int amount = 0;
             Console.WriteLine("Числа кратные 3 или 5 : ");
 
-            for (int i = 0; i < number; i++)
-
+            for (int i = 0; i < 100; i++)
                 if (i % 3 == 0 || i % 5 == 0)
-
                 {
                     Console.WriteLine(i);
                     amount += i;
