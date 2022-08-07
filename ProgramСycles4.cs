@@ -13,13 +13,13 @@ namespace CSLight
             Random random = new Random();
 
             int number = random.Next(0, 100);
-            int minimumMultiple = 3;
-            int maximumMultiple = 5;
+            int multiple1 = 3;
+            int multiple2 = 5;
             int amount = 0;
             Console.WriteLine("Числа кратные 3 или 5 : ");
 
-            for (int i = 0; i < 100; i++)
-                if (i % 3 == 0 || i % 5 == 0)
+            for (int i = 0; i < number; i++)
+                if (i % multiple1 == 0 || i % multiple2 == 0)
                 {
                     Console.WriteLine(i);
                     amount += i;
