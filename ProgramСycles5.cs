@@ -19,6 +19,8 @@ namespace CSLight
             float balanceOfRubles;
             float balanceOfDollars;
             float balanceOfTheEuro;
+            float moneyReceived;
+
             string userInput;
             float currencyCount;
             bool bankOpening = true;
@@ -62,7 +64,8 @@ namespace CSLight
                         if (balanceOfRubles >= currencyCount)
                         {
                             balanceOfRubles -= currencyCount;
-                            balanceOfDollars += currencyCount / rubToUsd;
+                            moneyReceived = currencyCount * rubToUsd;
+                            balanceOfDollars += moneyReceived;
                         }
                         else
                         {
@@ -77,7 +80,8 @@ namespace CSLight
                         if (balanceOfDollars >= currencyCount)
                         {
                             balanceOfDollars -= currencyCount;
-                            balanceOfRubles += currencyCount * usdToRub;
+                            moneyReceived = usdToRub;
+                            balanceOfRubles += moneyReceived;
                         }
                         else
                         {
@@ -92,7 +96,8 @@ namespace CSLight
                         if (balanceOfRubles >= currencyCount)
                         {
                             balanceOfRubles -= currencyCount;
-                            balanceOfTheEuro += currencyCount / rubToEur;
+                            moneyReceived = currencyCount * rubToEur; 
+                            balanceOfTheEuro += moneyReceived;
                         }
                         else
                         {
@@ -107,7 +112,8 @@ namespace CSLight
                         if (balanceOfTheEuro >= currencyCount)
                         {
                             balanceOfTheEuro -= currencyCount;
-                            balanceOfRubles += currencyCount * eurToRub;
+                            moneyReceived = currencyCount * eurToRub;
+                            balanceOfRubles += moneyReceived;
                         }
                         else
                         {
@@ -122,7 +128,8 @@ namespace CSLight
                         if (balanceOfDollars >= currencyCount)
                         {
                             balanceOfDollars -= currencyCount;
-                            balanceOfTheEuro += currencyCount * usdToEur;
+                            moneyReceived = currencyCount * usdToEur;
+                            balanceOfTheEuro += moneyReceived;
                         }
                         else
                         {
@@ -137,7 +144,8 @@ namespace CSLight
                         if (balanceOfTheEuro >= currencyCount)
                         {
                             balanceOfTheEuro -= currencyCount;
-                            balanceOfDollars += currencyCount * eurToUsd;
+                            moneyReceived = currencyCount * eurToUsd;
+                            balanceOfDollars += moneyReceived;
                         }
                         else
                         {
