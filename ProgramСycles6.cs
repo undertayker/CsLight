@@ -29,42 +29,42 @@ namespace CSLight
                 Console.WriteLine("Выберите команду из меню : ");
                 enter = Console.ReadLine();
 
-                if (enter == "Time")
+                switch (enter)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Вы выбрали команду [Time]");
-                    Console.WriteLine(DateTime.Now);
-                    Console.WriteLine("Нажмите Enter для возврата в меню ");
-                    Console.ReadLine();
+                    case "Time":
+                        Console.Clear();
+                        Console.WriteLine("Вы выбрали команду [Time]");
+                        Console.WriteLine(DateTime.Now);
+                        Console.WriteLine("Нажмите Enter для возврата в меню ");
+                        Console.ReadLine();
+                        break;
+                    case "ChangeColor":
+                        Console.Clear();
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.WriteLine("Вы выбрали команду [ChangeColor]");
+                        Console.WriteLine("Была произведена окораска текста ");
+                        Console.WriteLine("Нажмите Enter для возврата в меню ");
+                        Console.ReadLine();
+                        Console.ResetColor();
+                        break;
+                    case "Set Name":
+                        Console.Clear();
+                        Console.WriteLine("Вы выбрали команду [SetName]");
+                        Console.WriteLine("Введите ваше имя : ");
+                        name = Console.ReadLine();
+                        Console.WriteLine("Ваше имя установлено\nДобро пожаловать!!!\n" + name);
+                        Console.WriteLine("Нажмите Enter для возврата в меню ");
+                        Console.ReadLine();
+                        break;
+                    case "Esc":
+                        Console.Clear();
+                        Console.WriteLine("Вы выбрали команду [Esc]");
+                        Console.WriteLine("Спасибо за внимание, всего хорошего! ");
+                        break;
+                    default:
+                        Console.WriteLine("Введена неверная команда, повторите ввод ");
+                        break;
                 }
-                else if (enter == "ChangeColor")
-                {
-                    Console.Clear();
-                    Console.BackgroundColor = ConsoleColor.DarkBlue;
-                    Console.WriteLine("Вы выбрали команду [ChangeColor]");
-                    Console.WriteLine("Была произведена окораска текста ");
-                    Console.WriteLine("Нажмите Enter для возврата в меню ");
-                    Console.ReadLine();
-                    Console.ResetColor();
-                }
-                else if (enter == "Set Name")
-                {
-                    Console.Clear();
-                    Console.WriteLine("Вы выбрали команду [SetName]");
-                    Console.WriteLine("Введите ваше имя : ");
-                    name = Console.ReadLine();
-                    Console.WriteLine("Ваше имя установлено\nДобро пожаловать!!!\n" + name);
-                    Console.WriteLine("Нажмите Enter для возврата в меню ");
-                    Console.ReadLine();
-                }
-                else if (enter == "Esc")
-                {
-                    Console.Clear();
-                    Console.WriteLine("Вы выбрали команду [Esc]");
-                    Console.WriteLine("Спасибо за внимание, всего хорошего! ");
-                }
-                else
-                    Console.WriteLine("Введена неверная команда, повторите ввод ");
             }
         }
     }
