@@ -9,49 +9,49 @@ namespace CSLight
     internal class Program1
     {
         static void Main(string[] args)
-        {
-            float rubToUsd = 60;         
+        {        
             float usdToRub = 61;
-            float rubToEur = 61;
+            float rubToUsd = 1 / usdToRub;
             float eurToRub = 61;
+            float rubToEur = 1 / eurToRub;
             float usdToEur = 1;
             float eurToUsd = 1;
-            float balanceOfRubles;
-            float balanceOfDollars;
-            float balanceOfTheEuro;
+            float balanceOfRub;
+            float balanceOfUsd;
+            float balanceOfTheEur;
             float moneyReceived;
 
             string userInput;
             float currencyCount;
-            bool bankOpening = true;
+            bool isBankOpening = true;
             string exit = "выход";
-            string number1 = "rub-usd";
-            string number2 = "usd-rub";
-            string number3 = "rub-eur";
-            string number4 = "eur-rub";
-            string number5 = "usd-eur";
-            string number6 = "eur-usd";
+            string exchangeRubToUsd = "rub-usd";
+            string exchangeUsdToRub = "usd-rub";
+            string exchangeRubToEur = "rub-eur";
+            string exchangeEurToRub = "eur-rub";
+            string exchangeUsdToEur = "usd-eur";
+            string exchangeEurToUsd = "eur-usd";
 
             Console.WriteLine("Добро пожаловать в наш банк, у нас вы можете обменять следующие валюты : ");
             Console.WriteLine("Рубли в доллары, доллары в рубли, рубли в евро, евро в рубли, доллары в евро и евро в доллары. ");
             Console.WriteLine("Для выхода из банка введите слово : " + exit);
             Console.WriteLine("Для продолжения введите ваш баланс. ");
 
-            while (bankOpening)
+            while (isBankOpening)
             {
                 Console.Write("Введите ваш баланс рублей : ");
-                balanceOfRubles = Convert.ToSingle(Console.ReadLine());
+                balanceOfRub = Convert.ToSingle(Console.ReadLine());
                 Console.Write("Введите ваш баланс долларов : ");
-                balanceOfDollars = Convert.ToSingle(Console.ReadLine());
+                balanceOfUsd = Convert.ToSingle(Console.ReadLine());
                 Console.Write("Введите ваш баланс евро : ");
-                balanceOfTheEuro = Convert.ToSingle(Console.ReadLine());
+                balanceOfTheEur = Convert.ToSingle(Console.ReadLine());
 
-                Console.WriteLine("Что бы обменять рубли на доллары введите : " + number1);
-                Console.WriteLine("Что бы обменять доллары на рубли введите : " + number2);
-                Console.WriteLine("Что бы обменять рубли на евро введите : " + number3);
-                Console.WriteLine("Что бы бменять евро на рубли введите : " + number4);
-                Console.WriteLine("Что бы обменять доллары на евро введите : " + number5);
-                Console.WriteLine("Что бы обменять евро на доллары введите : " + number6);
+                Console.WriteLine("Что бы обменять рубли на доллары введите : " + exchangeRubToUsd);
+                Console.WriteLine("Что бы обменять доллары на рубли введите : " + exchangeUsdToRub);
+                Console.WriteLine("Что бы обменять рубли на евро введите : " + exchangeRubToEur);
+                Console.WriteLine("Что бы бменять евро на рубли введите : " + exchangeEurToRub);
+                Console.WriteLine("Что бы обменять доллары на евро введите : " + exchangeUsdToEur);
+                Console.WriteLine("Что бы обменять евро на доллары введите : " + exchangeEurToUsd);
                 userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -61,11 +61,11 @@ namespace CSLight
                         Console.Write("Сколько рублей вы хотите обменять ? : ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceOfRubles >= currencyCount)
+                        if (balanceOfRub >= currencyCount)
                         {
-                            balanceOfRubles -= currencyCount;
+                            balanceOfRub -= currencyCount;
                             moneyReceived = currencyCount * rubToUsd;
-                            balanceOfDollars += moneyReceived;
+                            balanceOfUsd += moneyReceived;
                         }
                         else
                         {
@@ -77,11 +77,11 @@ namespace CSLight
                         Console.WriteLine("Сколько долларов вы хотите обменять ?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceOfDollars >= currencyCount)
+                        if (balanceOfUsd >= currencyCount)
                         {
-                            balanceOfDollars -= currencyCount;
+                            balanceOfUsd -= currencyCount;
                             moneyReceived = currencyCount* usdToRub;
-                            balanceOfRubles += moneyReceived;
+                            balanceOfRub += moneyReceived;
                         }
                         else
                         {
@@ -93,11 +93,11 @@ namespace CSLight
                         Console.WriteLine("Сколько рублей вы хотите обменять ?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceOfRubles >= currencyCount)
+                        if (balanceOfRub >= currencyCount)
                         {
-                            balanceOfRubles -= currencyCount;
+                            balanceOfRub -= currencyCount;
                             moneyReceived = currencyCount * rubToEur; 
-                            balanceOfTheEuro += moneyReceived;
+                            balanceOfTheEur += moneyReceived;
                         }
                         else
                         {
@@ -109,11 +109,11 @@ namespace CSLight
                         Console.WriteLine("Сколько евро вы хотите обменять ? ");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceOfTheEuro >= currencyCount)
+                        if (balanceOfTheEur >= currencyCount)
                         {
-                            balanceOfTheEuro -= currencyCount;
+                            balanceOfTheEur -= currencyCount;
                             moneyReceived = currencyCount * eurToRub;
-                            balanceOfRubles += moneyReceived;
+                            balanceOfRub += moneyReceived;
                         }
                         else
                         {
@@ -125,11 +125,11 @@ namespace CSLight
                         Console.WriteLine("Сколько долларов вы хотите обменять ?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceOfDollars >= currencyCount)
+                        if (balanceOfUsd >= currencyCount)
                         {
-                            balanceOfDollars -= currencyCount;
+                            balanceOfUsd -= currencyCount;
                             moneyReceived = currencyCount * usdToEur;
-                            balanceOfTheEuro += moneyReceived;
+                            balanceOfTheEur += moneyReceived;
                         }
                         else
                         {
@@ -141,11 +141,11 @@ namespace CSLight
                         Console.WriteLine("Сколько евро вы хотите обменять ?");
                         currencyCount = Convert.ToSingle(Console.ReadLine());
 
-                        if (balanceOfTheEuro >= currencyCount)
+                        if (balanceOfTheEur >= currencyCount)
                         {
-                            balanceOfTheEuro -= currencyCount;
+                            balanceOfTheEur -= currencyCount;
                             moneyReceived = currencyCount * eurToUsd;
-                            balanceOfDollars += moneyReceived;
+                            balanceOfUsd += moneyReceived;
                         }
                         else
                         {
@@ -153,14 +153,14 @@ namespace CSLight
                         }
                         break;
                     case "выход":
-                        bankOpening = false;
+                        isBankOpening = false;
                         break;
                     default:
                         Console.WriteLine("Вы ввели недопустимую команду ");
                         break;
                 }
 
-                Console.WriteLine("Ваш баланс " + balanceOfRubles + " рублей " + balanceOfDollars + " долларов " + balanceOfTheEuro + " евро ");
+                Console.WriteLine("Ваш баланс " + balanceOfRub + " рублей " + balanceOfUsd + " долларов " + balanceOfTheEur + " евро ");
                 Console.ReadKey();
             }
         }
