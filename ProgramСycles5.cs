@@ -80,7 +80,7 @@ namespace CSLight
                         if (balanceOfDollars >= currencyCount)
                         {
                             balanceOfDollars -= currencyCount;
-                            moneyReceived = usdToRub;
+                            moneyReceived = currencyCount* usdToRub;
                             balanceOfRubles += moneyReceived;
                         }
                         else
