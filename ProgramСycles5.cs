@@ -10,7 +10,7 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            float rubToUsd = 60;
+            float rubToUsd = 60;         
             float usdToRub = 61;
             float rubToEur = 61;
             float eurToRub = 61;
