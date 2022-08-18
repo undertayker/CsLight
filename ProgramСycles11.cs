@@ -12,7 +12,7 @@ namespace CSLight
         {
             Console.WriteLine("Введите любое количество символов '(' и ')' и программа посчитает\nявляется ли выражение корректным и посчитает глубину вложения : ");
             string userInput = Console.ReadLine();
-            int length = userInput.Length;         
+            int length = userInput.Length;
 
             if (length == 0)
             {
@@ -27,32 +27,37 @@ namespace CSLight
             {
                 if (userInput[i] == '(')
                 {
-                    depth++;
-                }
-
-                if (userInput[i] == ')')
-                {
                     maximumDepth++;
-
                 }
 
-            }
-            if (maximumDepth == depth)
-            {
-                Console.WriteLine("Ваше выражение не корректно ! ");
+                else if (userInput[i] == ')')
+                {
+                    maximumDepth--;
+                }
+
+                if (maximumDepth > depth)
+                {
+                    depth = maximumDepth;
+                }
+
+                else if (maximumDepth < 0)
+                {
+                    break;
+                }
             }
 
-            if (maximumDepth != depth)
+            if (maximumDepth == 0)
             {
-                
-                Console.WriteLine("Ваше выражение корректно ! ");
-                Console.WriteLine("Максимальная глубина : " + maximumDepth);
-
+                Console.WriteLine("Строка корректна.");
+                Console.WriteLine("Максимальная глубина: " + depth);
+            }
+            else if (maximumDepth < 0)
+            {
+                Console.WriteLine("Строка некорректна.");
             }
         }
     }
 }
-
 
 
 
