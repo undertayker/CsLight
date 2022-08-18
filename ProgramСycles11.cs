@@ -10,79 +10,51 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            string userInput;
-            int symbolToTheLeftSide = 0;
-            int symbolToTheRightSide = 0;
-            int counter1 = 0;
-            int counter2 = 0;
-            int final = 0;
-            int count = 0;
-
             Console.WriteLine("Введите любое количество символов '(' и ')' и программа посчитает\nявляется ли выражение корректным и посчитает глубину вложения : ");
-            userInput = Console.ReadLine();
+            string userInput = Console.ReadLine();
+            int length = userInput.Length;
 
-            if (userInput.Length == 0)
+            if (length == 0)
             {
-                Console.WriteLine("Ошибка!!!");
+                Console.WriteLine("Ошибка!");
+                return;
             }
 
-            for (int i = 0; i < userInput.Length; i++)
-            {
+            int theDepth = 0;
+            int maximumDepth = 0;
 
+            for (int i = 0; i < length; i++)
+            {
                 if (userInput[i] == '(')
                 {
-                    symbolToTheLeftSide++;
+                    theDepth++;
                 }
                 else if (userInput[i] == ')')
                 {
-                    if (i != userInput.Length - 1 && userInput[i + 1] != '(')
-                    {
-                        count++;
-                        symbolToTheLeftSide--;
-                    }
+                    maximumDepth++;
                 }
-                if (userInput[i] == '(')
+                if (maximumDepth == theDepth)
                 {
-                    symbolToTheLeftSide++;
+                    maximumDepth = theDepth;
+                                  
                 }
-                if (userInput[i] == ')')
+                if (maximumDepth == theDepth)
                 {
-                    symbolToTheRightSide++;
+                    maximumDepth--;
+                    Console.WriteLine("Ваше выражение корректно ! " );
                 }
+               else if (maximumDepth != theDepth)
+                {
+                    Console.WriteLine("Ваше выражение не корректно ! ");
+                }
+                Console.WriteLine("Максимальная глубина : " + maximumDepth);
             }
-
-            if (symbolToTheLeftSide != symbolToTheRightSide)
-            {
-                Console.WriteLine("Ваша строка корректна ! ");
-            }
-            else if (symbolToTheLeftSide == symbolToTheRightSide)
-            {
-                Console.WriteLine("Ваша строка не корректна ! ");
-            }
-
-            for (int i = 0; i < userInput.Length; i++)
-            {
-                if (userInput[i] == ')')
-                {
-                    counter1++;
-                }
-                else
-                {
-                    counter1 = 0;
-                }
-                if (counter1 > 0)
-                {
-                    if (counter2 <= counter1)
-                    {
-                        counter2 = counter1;
-                        final = counter2 + 1;
-                    }
-                }
-            }
-            Console.WriteLine("Максимальная глубина скобок : " + final);
         }
     }
 }
+
+
+
 
 
 
