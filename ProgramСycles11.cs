@@ -29,7 +29,6 @@ namespace CSLight
                 {
                     maximumDepth++;
                 }
-
                 else if (userInput[i] == ')')
                 {
                     maximumDepth--;
@@ -38,12 +37,7 @@ namespace CSLight
                 if (maximumDepth > depth)
                 {
                     depth = maximumDepth;
-                }
-
-                else if (maximumDepth < 0)
-                {
-                    break;
-                }
+                }               
             }
 
             if (maximumDepth == 0)
