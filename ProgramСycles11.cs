@@ -36,12 +36,8 @@ namespace CSLight
                 if (maximumDepth == theDepth)
                 {
                     maximumDepth = theDepth;
-                                  
-                }
-                if (maximumDepth == theDepth)
-                {
                     maximumDepth--;
-                    Console.WriteLine("Ваше выражение корректно ! " );
+                    Console.WriteLine("Ваше выражение корректно ! ");
                 }
                else if (maximumDepth != theDepth)
                 {
