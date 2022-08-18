@@ -26,7 +26,7 @@ namespace CSLight
                 Console.WriteLine("Ошибка!!!");
             }
 
-            for (int i = 0; i < userInput.Length; i++ )
+            for (int i = 0; i < userInput.Length; i++)
             {
 
                 if (userInput[i] == '(')
@@ -35,7 +35,7 @@ namespace CSLight
                 }
                 else if (userInput[i] == ')')
                 {
-                    if (i != userInput.Length - 1 && userInput[i + 1] != '(' )
+                    if (i != userInput.Length - 1 && userInput[i + 1] != '(')
                     {
                         count++;
                         symbolToTheLeftSide--;
@@ -51,15 +51,15 @@ namespace CSLight
                 }
             }
 
-            if (symbolToTheLeftSide == symbolToTheRightSide)
+            if (symbolToTheLeftSide != symbolToTheRightSide)
             {
-                Console.WriteLine("Ваша строка корректна !! ");
+                Console.WriteLine("Ваша строка корректна ! ");
             }
-            else if (symbolToTheLeftSide != symbolToTheRightSide)
+            else if (symbolToTheLeftSide == symbolToTheRightSide)
             {
-                Console.WriteLine("Ваша строка не корректна !! ");
+                Console.WriteLine("Ваша строка не корректна ! ");
             }
-           
+
             for (int i = 0; i < userInput.Length; i++)
             {
                 if (userInput[i] == ')')
@@ -70,18 +70,20 @@ namespace CSLight
                 {
                     counter1 = 0;
                 }
-                if (counter1 > 0 )
+                if (counter1 > 0)
                 {
                     if (counter2 <= counter1)
                     {
                         counter2 = counter1;
-                        final = counter2;
+                        final = counter2 + 1;
                     }
                 }
             }
-            Console.WriteLine("Максимальная вложенность скобок : " + final);
+            Console.WriteLine("Максимальная глубина скобок : " + final);
         }
     }
 }
+
+
 
 
