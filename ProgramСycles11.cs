@@ -10,42 +10,45 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите любое количество символов '(' и ')' и программа посчитает\nявляется ли выражение корректным и посчитает глубину вложения : ");
-            string userInput = Console.ReadLine();
-            int length = userInput.Length;
-
-            if (length == 0)
-            {
-                Console.WriteLine("Ошибка!");
-                return;
-            }
-
+            const char openedScope = '(';
+            const char closingScope = ')';           
             int depth = 0;
             int maximumDepth = 0;
 
-            for (int i = 0; i < length; i++)
+            Console.WriteLine("Введите любое количество символов '(' и ')' и программа посчитает\nявляется ли выражение корректным и посчитает глубину вложения : ");
+            string userInput = Console.ReadLine();
+
+            foreach (char currentChar in userInput)
             {
-                if (userInput[i] == '(')
+                if (currentChar == openedScope)
                 {
-                    maximumDepth++;
-                }
-                else if (userInput[i] == ')')
-                {
-                    maximumDepth--;
+                    depth++;
+
+                    bool isValidCoutHighterDeep = (depth > maximumDepth);
+
+                    if (isValidCoutHighterDeep == true)
+                    {
+                        maximumDepth = depth;
+                    }
                 }
 
-                if (maximumDepth > depth)
+                if (currentChar == closingScope)
                 {
-                    depth = maximumDepth;
-                }               
+                    depth--;
+                }
+
+                if (depth < 0)
+                {
+                    break;
+                }
             }
 
-            if (maximumDepth == 0)
+            if (depth == 0)
             {
                 Console.WriteLine("Строка корректна.");
-                Console.WriteLine("Максимальная глубина: " + depth);
+                Console.WriteLine("Максимальная глубина: " + maximumDepth);
             }
-            else if (maximumDepth < 0)
+            else
             {
                 Console.WriteLine("Строка некорректна.");
             }
