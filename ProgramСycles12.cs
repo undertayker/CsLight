@@ -32,8 +32,7 @@ namespace CSLight
             Console.WriteLine("Вы - ЖНЕЦ, пожиратель смерти, для поиска еще большей силы вы спустились в подземелье. ");
             Console.WriteLine("И вот вы наткнулись на покои босса!!\nИ что же там вас ждет? заветная мечта или смерть, решать вам!");
             Console.WriteLine("В вашем арсенале 4 заклинания, что бы выжить используйте их с умом!");
-            Console.WriteLine($"Ваше здоровье - {playerHealth}. Здоровье босса {bossHealth}\nВаши заклинания : ");
-            userInput = Console.ReadLine();
+            Console.WriteLine($"Ваше здоровье - {playerHealth}. Здоровье босса {bossHealth}\nВаши заклинания : ");            
 
             while (playerHealth > 0 && bossHealth > 0)
             {
