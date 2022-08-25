@@ -40,7 +40,7 @@ namespace CSLight
 
                 Console.WriteLine("1. Пожиратель душ - Вы жертвуете часть своего здоровья темному богу\nБлагодаря этому вы можете призывать группу нежети которые помогут вам разобраться с боссом\nУрон игроку - 300 ");
                 Console.WriteLine("2. Коса смерти - бьете босса рассекающим ударом косы нанося ему - 150 урона ");
-                Console.WriteLine("3. Круг теней - вы призываете призраков из загробного мира, которые восстанавливают вам - 200хп\nНо будьте осторожны призыв может получится только единажды");
+                Console.WriteLine("3. Круг теней - вы призываете призраков из загробного мира, которые восстанавливают вам - 150 хп\nНо будьте осторожны призыв может получится только единажды");
                 Console.WriteLine("4. Призыв нежети - вы призываете из загробного мира группу нежети, которая помогает вам в сражении, урон от нежити - 300 ");
                 userInput = Console.ReadLine();
 
@@ -50,7 +50,7 @@ namespace CSLight
                     case "1":
                         if (maximumSoulSacrifice > 0)
                         {
-                            
+                            playerSacrifice = true;
                             maximumSoulSacrifice--;
                             playerHealth -= soulEater;
 
@@ -58,7 +58,7 @@ namespace CSLight
                             Console.WriteLine($"Ваше здоровье  {playerHealth}. Здоровье босса {bossHealth}\nНажмите Enter для возврата к заклинаниям");
                             Console.ReadLine();
                             break;
-                        
+
                         }
                         else
                         {
@@ -67,7 +67,7 @@ namespace CSLight
                             Console.ReadLine();
                             break;
                         }
-                        
+
                     case "2":
 
                         playerHealth -= bossDamage;
@@ -101,7 +101,7 @@ namespace CSLight
 
                     case "4":
 
-                        if (userInput == spell1)
+                        if (playerSacrifice == true)
                         {
                             playerSacrifice = true;
                             bossHealth -= callOfTheUnbelievers;
@@ -109,20 +109,19 @@ namespace CSLight
                             Console.WriteLine($"Ты выбрал призыв нежети, призвал 10 воинов скилетов которые наносят по 30 урона каждый и нанес боссу {callOfTheUnbelievers} единиц урона ");
                             Console.WriteLine($"Ваше здоровье  {playerHealth}. Здоровье босса {bossHealth}\nНажмите Enter для возврата к заклинаниям");
                             Console.ReadLine();
-                        }
-                        else
+                        }   
+                        else if (playerSacrifice == false)
                         {
                             Console.WriteLine("К сожалению вы не можете использовать данное заклинание так как еще не принисли жертву");
                             Console.WriteLine($"Ваше здоровье  {playerHealth}. Здоровье босса {bossHealth}\nНажмите Enter для возврата к заклинаниям");
                             Console.ReadLine();
-                        }
+                        }                       
                         break;
                     default:
                         Console.WriteLine("Вы еще не повысили свой уровень знания для такого заклинания, такое заклинание недоступно ");
                         break;
                 }
             }
-
             if (playerSacrifice = true && maximumSoulSacrifice <= 0)
             {
                 playerSacrifice = false;
@@ -132,8 +131,11 @@ namespace CSLight
             {
                 playerTreatment = false;
             }
-
-            if (bossHealth <= 0)
+            if (bossHealth <= 0 && playerHealth <= 0)
+            {
+                Console.WriteLine("Была ожесточенная схватка из которой никто не вышел победителем ");
+            }
+            else if (bossHealth <= 0)
             {
                 Console.WriteLine("Босс повержен, наконец-то вы смогли достич своей цели и получить заветное");
             }
