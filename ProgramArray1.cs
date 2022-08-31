@@ -26,10 +26,12 @@ namespace CSLight
                 }
                 Console.WriteLine();
             }
+
             for (int i = 0; i < array.GetLength(1); i++)
             {
                 sum += array[selectedRow - 1 ,i];
             }
+
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 productNumbers *= array[i, selectedColumn - 1];
