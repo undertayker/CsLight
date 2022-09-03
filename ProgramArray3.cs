@@ -18,6 +18,7 @@ namespace CSLight
                 array[i] = random.Next(0,10);
                 Console.WriteLine(array[i] + " ");
             }
+
             Console.WriteLine("Локальный максимум : ");
 
             for(int i = 1; i < array.Length - 1; i++)
@@ -25,8 +26,9 @@ namespace CSLight
                 if(array[i - 1] < array[i] && array[i] > array[i + 1])
                 {
                     Console.WriteLine( array[i] + " ");
-                }
+                }                                
             }
+
             Console.WriteLine();
         }
     }
