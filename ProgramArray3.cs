@@ -10,26 +10,38 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            int[] array = new int[30];
             Random random = new Random();
+            int[] array = new int[30];            
+            string localMaximum = " ";
 
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.GetLength(0); i++)
             {
-                array[i] = random.Next(0,10);
+                array[i] = random.Next(1, 9);
                 Console.WriteLine(array[i] + " ");
-            }
 
-            Console.WriteLine("Локальный максимум : ");
-
-            for(int i = 1; i < array.Length - 1; i++)
-            {
-                if(array[i - 1] < array[i] && array[i] > array[i + 1])
+                if ((i == array.GetLength(0) - 1) && (array[0] > array[1]))
                 {
-                    Console.WriteLine( array[i] + " ");
-                }                                
+                    localMaximum += array[0] + " ";
+                }
+
+                if (i == array.GetLength(0) - 1)
+                {
+                    for (int j = 1; j < array.GetLength(0) - 1; j++)
+                    {
+                        if (array[j] > array[j + 1] && array[j] > array[j - 1])
+                        {
+                            localMaximum += array[j] + " ";
+                        }
+                    }
+                }
+
+                if ((i == array.GetLength(0) - 1) && (array[array.GetLength(0) - 1] > array[array.GetLength(0) - 2]))
+                {
+                    localMaximum += " " + array[array.GetLength(0) - 1];
+                }
             }
 
-            Console.WriteLine();
+            Console.WriteLine($"Локальный максимум : {localMaximum}");
         }
     }
 }
