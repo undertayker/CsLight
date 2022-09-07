@@ -10,19 +10,18 @@ namespace CSLight
     {
         static void Main(string[] args)
         {
-            Random rand = new Random();
+            Random random = new Random();
             int[] array = new int[30];
             
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = rand.Next(1, 9);
+                array[i] = random.Next(1, 9);
                 Console.Write(array[i] + " ");
 
                 if ((i + 1) % 10 == 0)
                 {
                     Console.WriteLine();
-                }
-                    
+                }                  
             }
 
             Console.Write("Локальные максимумы: ");
@@ -43,6 +42,7 @@ namespace CSLight
                     localMaxCount++;
                     repeatCheck = true;
                 }
+
                 if ((localMaxCount - 1) % 10 == 0 && repeatCheck)
                 {
                     Console.WriteLine();
