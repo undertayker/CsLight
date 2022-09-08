@@ -16,7 +16,7 @@ namespace CSLight
             int counter = 1;
 
             for (int i = 0; i < array.Length; i++)
-            {        
+            {
                 Console.Write(array[i] + " ");
             }
 
@@ -29,9 +29,12 @@ namespace CSLight
                 else if (repetitionRate < counter)
                 {
                     repetitionRate = counter;
-                    repeatingNumber = array[i - 1];
+                    repeatingNumber = array[i - 1];                   
+                }
+                else if (array[i] != array[i - 1])
+                {
                     counter = 1;
-                }               
+                }
             }
 
             Console.WriteLine($"\nЧисло {repeatingNumber} \nколичество повторений {repetitionRate}");
