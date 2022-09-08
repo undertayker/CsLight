@@ -11,8 +11,7 @@ namespace CSLight
         static void Main(string[] args)
         {
             int[] array = new int[0];
-            string userInput;                    
-            string numberEntry = "number entry";
+            string userInput;           
             string sumOfNumbers = "sum";
             string exit = "exit";
 
@@ -21,33 +20,33 @@ namespace CSLight
             Console.WriteLine("Добро пожаловать в программу!");
 
             while (programmeWork)
-            {
-                Console.Write("\nВаши введенные числа : ");
+            {              
+                int numberInArray;
+               
+                Console.WriteLine("Введите ваше число : ");
+                numberInArray = Convert.ToInt32(Console.ReadLine());
+                int[] tempArray = new int[array.Length + 1];
+                Console.Write("Ваши введенные числа : ");
+                
+                for (int i = 0; i < array.Length; i++)
+                {
+                    tempArray[i] = array[i];
+                }
+
+                tempArray[array.Length] = numberInArray;
+                array = tempArray;
 
                 foreach (int number in array)
                 {
                     Console.Write(number + ", ");
                 }
 
-                Console.WriteLine($"\nДля добавление чисел в массив введите команду : {numberEntry}\nДля суммы чисел введите команду : {sumOfNumbers}\nДля выхода из программы введите команду : {exit} ");
+                Console.WriteLine($"\nДля суммы чисел введите команду : {sumOfNumbers}\nДля выхода из программы введите команду : {exit}\nДля продолжения ввода чисел нажмите любую клавишу ");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case "number entry":
-                        int numberInArray;
-                        Console.WriteLine("Введите ваше число : ");
-                        numberInArray = Convert.ToInt32(Console.ReadLine());
-                        int[] tempArray = new int[array.Length + 1];
-
-                        for (int i = 0; i < array.Length; i++)
-                        {
-                            tempArray[i] = array[i];
-                        }
-
-                        tempArray[array.Length] = numberInArray;
-                        array = tempArray;
-                        break;
+                   
                     case "sum":
                         int sum = 0;
 
@@ -61,10 +60,6 @@ namespace CSLight
                     case "exit":
                         programmeWork = false;
                         Console.WriteLine("Спасибо что пользовались нашей программой, возвращайтесь снова! ");
-                        break;
-
-                    default:
-                        Console.WriteLine("Неизвестная команда");
                         break;
 
                 }
