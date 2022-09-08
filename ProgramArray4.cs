@@ -11,9 +11,7 @@ namespace CSLight
         static void Main(string[] args)
         {
             int[] array = new int[0];
-            string userInput;
-            int sum;
-            int numberInArray;
+            string userInput;                    
             string numberEntry = "number entry";
             string sumOfNumbers = "sum";
             string exit = "exit";
@@ -25,6 +23,7 @@ namespace CSLight
             while (programmeWork)
             {
                 Console.Write("\nВаши введенные числа : ");
+
                 foreach (int number in array)
                 {
                     Console.Write(number + ", ");
@@ -36,11 +35,12 @@ namespace CSLight
                 switch (userInput)
                 {
                     case "number entry":
+                        int numberInArray;
                         Console.WriteLine("Введите ваше число : ");
                         numberInArray = Convert.ToInt32(Console.ReadLine());
-                        int [] tempArray = new int[array.Length + 1];
+                        int[] tempArray = new int[array.Length + 1];
 
-                        for(int i = 0; i < array.Length; i++)
+                        for (int i = 0; i < array.Length; i++)
                         {
                             tempArray[i] = array[i];
                         }
@@ -49,7 +49,7 @@ namespace CSLight
                         array = tempArray;
                         break;
                     case "sum":
-                        sum = 0;
+                        int sum = 0;
 
                         for (int j = 0; j < array.Length; j++)
                         {
@@ -63,7 +63,7 @@ namespace CSLight
                         Console.WriteLine("Спасибо что пользовались нашей программой, возвращайтесь снова! ");
                         break;
 
-                        default:
+                    default:
                         Console.WriteLine("Неизвестная команда");
                         break;
 
