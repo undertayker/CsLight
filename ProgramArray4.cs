@@ -23,43 +23,45 @@ namespace CSLight
             {
                 Console.WriteLine($"\nДля суммы чисел введите команду : {sumOfNumbers}\nДля выхода из программы введите команду : {exit}\nВведите ваше число : ");
                 userInput = Console.ReadLine();
+                Console.Clear();
 
                 if (int.TryParse(userInput, out int result))
                 {
-                    int numberInArray;
-                    numberInArray = Convert.ToInt32(Console.ReadLine());
                     int[] tempArray = new int[array.Length + 1];
-                    Console.Write("Ваши введенные числа : ");
 
                     for (int i = 0; i < array.Length; i++)
                     {
                         tempArray[i] = array[i];
                     }
 
-                    tempArray[array.Length] = numberInArray;
-                    array = tempArray;
-
-                    foreach (int number in array)
-                    {
-                        Console.Write(number + ",");
-                    }
+                    tempArray[array.Length] = result;
+                    array = tempArray;                  
 
                 }
                 else if (userInput == "sum")
                 {
-                   int sum = 0;
+                    int sum = 0;
 
-                    for(int j = 0; j < array.Length; j++)
+                    for (int j = 0; j < array.Length; j++)
                     {
                         sum += array[j];
-                      
                     }
+
                     Console.WriteLine("Сумма ваших чисел равна : " + sum);
+                    array = new int[0];
+                    Console.WriteLine("Массив очищен, введите числа занаво !");
                 }
-                else if(userInput == "exit")
+                else if (userInput == "exit")
                 {
                     programmeWork = false;
-                    Console.WriteLine("Спасибо что пользовались нашей программой !!");                     
+                    Console.WriteLine("Спасибо что пользовались нашей программой !!");
+                }
+
+                Console.Write("Ваши введенные числа : ");
+
+                foreach (int number in array)
+                {
+                    Console.Write(number + ",");
                 }
             }
         }
