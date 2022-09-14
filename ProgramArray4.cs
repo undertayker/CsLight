@@ -11,7 +11,7 @@ namespace CSLight
         static void Main(string[] args)
         {
             int[] array = new int[0];
-            string userInput;           
+            string userInput;
             string sumOfNumbers = "sum";
             string exit = "exit";
 
@@ -20,48 +20,46 @@ namespace CSLight
             Console.WriteLine("Добро пожаловать в программу!");
 
             while (programmeWork)
-            {              
-                int numberInArray;
-               
-                Console.WriteLine("Введите ваше число : ");
-                numberInArray = Convert.ToInt32(Console.ReadLine());
-                int[] tempArray = new int[array.Length + 1];
-                Console.Write("Ваши введенные числа : ");
-                
-                for (int i = 0; i < array.Length; i++)
-                {
-                    tempArray[i] = array[i];
-                }
-
-                tempArray[array.Length] = numberInArray;
-                array = tempArray;
-
-                foreach (int number in array)
-                {
-                    Console.Write(number + ", ");
-                }
-
-                Console.WriteLine($"\nДля суммы чисел введите команду : {sumOfNumbers}\nДля выхода из программы введите команду : {exit}\nДля продолжения ввода чисел нажмите любую клавишу ");
+            {
+                Console.WriteLine($"\nДля суммы чисел введите команду : {sumOfNumbers}\nДля выхода из программы введите команду : {exit}\nВведите ваше число : ");
                 userInput = Console.ReadLine();
 
-                switch (userInput)
+                if (int.TryParse(userInput, out int result))
                 {
-                   
-                    case "sum":
-                        int sum = 0;
+                    int numberInArray;
+                    numberInArray = Convert.ToInt32(Console.ReadLine());
+                    int[] tempArray = new int[array.Length + 1];
+                    Console.Write("Ваши введенные числа : ");
 
-                        for (int j = 0; j < array.Length; j++)
-                        {
-                            sum += array[j];
-                        }
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        tempArray[i] = array[i];
+                    }
 
-                        Console.WriteLine($"Сумма ваших чисел равна : {sum}");
-                        break;
-                    case "exit":
-                        programmeWork = false;
-                        Console.WriteLine("Спасибо что пользовались нашей программой, возвращайтесь снова! ");
-                        break;
+                    tempArray[array.Length] = numberInArray;
+                    array = tempArray;
 
+                    foreach (int number in array)
+                    {
+                        Console.Write(number + ",");
+                    }
+
+                }
+                else if (userInput == "sum")
+                {
+                   int sum = 0;
+
+                    for(int j = 0; j < array.Length; j++)
+                    {
+                        sum += array[j];
+                      
+                    }
+                    Console.WriteLine("Сумма ваших чисел равна : " + sum);
+                }
+                else if(userInput == "exit")
+                {
+                    programmeWork = false;
+                    Console.WriteLine("Спасибо что пользовались нашей программой !!");                     
                 }
             }
         }
