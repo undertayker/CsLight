@@ -36,7 +36,6 @@ namespace CSLight
 
                     tempArray[array.Length] = result;
                     array = tempArray;
-
                 }
                 else if (userInput == sumCommand)
                 {
