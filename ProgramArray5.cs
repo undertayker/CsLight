@@ -25,13 +25,14 @@ namespace CSLight
                 if (array[i] == array[i - 1])
                 {
                     counter++;
+
+                    if (repetitionRate < counter)
+                    {
+                        repetitionRate = counter;
+                        repeatingNumber = array[i - 1];
+                    }
                 }
-                else if (repetitionRate < counter)
-                {
-                    repetitionRate = counter;
-                    repeatingNumber = array[i - 1];                   
-                }
-                else if (array[i] != array[i - 1])
+                else 
                 {
                     counter = 1;
                 }
