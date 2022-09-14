@@ -12,8 +12,8 @@ namespace CSLight
         {
             int[] array = new int[0];
             string userInput;
-            string sumOfNumbers = "sum";
-            string exit = "exit";
+            string sumCommand = "sum";
+            string exitCommand = "exit";
 
             bool programmeWork = true;
 
@@ -21,7 +21,7 @@ namespace CSLight
 
             while (programmeWork)
             {
-                Console.WriteLine($"\nДля суммы чисел введите команду : {sumOfNumbers}\nДля выхода из программы введите команду : {exit}\nВведите ваше число : ");
+                Console.WriteLine($"\nДля суммы чисел введите команду : {sumCommand}\nДля выхода из программы введите команду : {exitCommand}\nВведите ваше число : ");
                 userInput = Console.ReadLine();
                 Console.Clear();
 
@@ -35,10 +35,10 @@ namespace CSLight
                     }
 
                     tempArray[array.Length] = result;
-                    array = tempArray;                  
+                    array = tempArray;
 
                 }
-                else if (userInput == "sum")
+                else if (userInput == sumCommand)
                 {
                     int sum = 0;
 
@@ -51,7 +51,7 @@ namespace CSLight
                     array = new int[0];
                     Console.WriteLine("Массив очищен, введите числа занаво !");
                 }
-                else if (userInput == "exit")
+                else if (userInput == exitCommand)
                 {
                     programmeWork = false;
                     Console.WriteLine("Спасибо что пользовались нашей программой !!");
@@ -67,9 +67,3 @@ namespace CSLight
         }
     }
 }
-
-
-
-
-
-
