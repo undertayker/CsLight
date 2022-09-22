@@ -13,9 +13,9 @@ namespace CSLight
             string text = "Ехал Грека через реку видит Грека в реке рак";
             string[] proposalConclusion = text.Split(' ');
 
-            foreach (string i in proposalConclusion)
+            foreach (string space in proposalConclusion)
             {
-                Console.WriteLine(i);
+                Console.WriteLine(space);
             }
         }
     }
