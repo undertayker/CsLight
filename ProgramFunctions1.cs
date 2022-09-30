@@ -17,7 +17,7 @@ namespace Functions
             const string AddToFile = "1";
             const string FileData = "2";
             const string DeleteFile = "3";
-            const string SearchFor= "4";
+            const string SearchFor = "4";
             const string CommandExit = "5";
 
 
@@ -28,7 +28,7 @@ namespace Functions
 
                 switch (userInput)
                 {
-                    case AddToFile :
+                    case AddToFile:
                         CreateDossier(ref surnames, ref posts);
                         break;
                     case FileData:
@@ -135,24 +135,23 @@ namespace Functions
             {
                 Console.WriteLine("Введите фамилию : ");
                 string surnameSearch = Console.ReadLine();
-                bool theFollowingWasFound = false;
-                bool noDossierFound = true;
+                bool fileNotFound = true;
 
                 for (int i = 0; i < firstArray.Length; i++)
                 {
                     if (firstArray[i] == surnameSearch)
                     {
-                        if (theFollowingWasFound == false)
+                        if (fileNotFound == true)
                         {
                             Console.WriteLine("Найдено следующее : ");
-                            theFollowingWasFound = true;
+                            fileNotFound = true;
                         }
                         Console.WriteLine($"{i + 1}. {firstArray[i]}-{secondArray[i]}");
-                        noDossierFound = false;
+                        fileNotFound = false;
                     }
                 }
 
-                if (noDossierFound == true)
+                if (fileNotFound == true)
                 {
                     Console.WriteLine("Фамилия не найдена! ");
                 }
