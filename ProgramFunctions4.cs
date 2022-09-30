@@ -30,33 +30,44 @@ namespace Functions
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
 
-                    switch (key.Key) 
-                    {
-                        case ConsoleKey.UpArrow:
-                            userDx = -1; userDy = 0;
-                            break;
-                        case ConsoleKey.DownArrow:
-                            userDx = 1; userDy = 0;
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            userDx = 0; userDy = - 1;
-                            break;
-                        case ConsoleKey.RightArrow:
-                            userDx = 0; userDy = 1;
-                            break;
-                    }
+                    ChangeDirection(key, ref userDx, ref userDy);
+
                     if (map[userX + userDx, userY + userDy] != '#')
                     {
-                        Console.SetCursorPosition(userY, userX);
-                        Console.Write(" ");
-
-                        userX += userDx;
-                        userY += userDy;
-
-                        Console.SetCursorPosition(userY, userX);
-                        Console.Write('@');
+                        MapMovement(ref userX, ref userY, userDx, userDy);
                     }
                 }
+            }
+        }
+
+        static void MapMovement(ref int userX, ref int userY, int userDx, int userDy)
+        {
+            Console.SetCursorPosition(userY, userX);
+            Console.Write(" ");
+
+            userX += userDx;
+            userY += userDy;
+
+            Console.SetCursorPosition(userY, userX);
+            Console.Write('@');
+        }
+
+        static void ChangeDirection(ConsoleKeyInfo key, ref int userDx, ref int userDy)
+        {
+            switch (key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    userDx = -1; userDy = 0;
+                    break;
+                case ConsoleKey.DownArrow:
+                    userDx = 1; userDy = 0;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    userDx = 0; userDy = -1;
+                    break;
+                case ConsoleKey.RightArrow:
+                    userDx = 0; userDy = 1;
+                    break;
             }
         }
 
@@ -85,7 +96,7 @@ namespace Functions
                 {
                     map[i, j] = newFile[i][j];
 
-                    if (map[i,j] == '@')
+                    if (map[i, j] == '@')
                     {
                         userX = i;
                         userY = j;
