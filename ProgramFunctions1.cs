@@ -3,37 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace CSLight
+namespace Functions
 {
-    internal class Program1
+    internal class Program
     {
         static void Main(string[] args)
         {
             string[] surnames = new string[0];
             string[] posts = new string[0];
             bool isWork = true;
+            const string AddToFile = "1";
+            const string FileData = "2";
+            const string DeleteFile = "3";
+            const string SearchFor= "4";
+            const string CommandExit = "5";
+
 
             while (isWork == true)
             {
-                Console.WriteLine("\n1. Добавить досье \n2. Вывести все данные досье  \n3. Удалить досье  \n4. Поиск по фамилии  \n5. Выход");
+                Console.WriteLine($"\n{AddToFile}. Добавить досье \n{FileData}. Вывести все данные досье  \n{DeleteFile}. Удалить досье  \n{SearchFor}. Поиск по фамилии  \n{CommandExit}. Выход");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case "1":
+                    case AddToFile :
                         CreateDossier(ref surnames, ref posts);
                         break;
-                    case "2":
+                    case FileData:
                         OutputInfoDossier(surnames, posts);
                         break;
-                    case "3":
+                    case DeleteFile:
                         DeleteDossier(ref surnames, ref posts);
                         break;
-                    case "4":
+                    case SearchFor:
                         SearchDossier(surnames, posts);
                         break;
-                    case "5":
+                    case CommandExit:
                         isWork = false;
                         break;
                 }
@@ -46,7 +53,7 @@ namespace CSLight
             string surname = Console.ReadLine();
             ExpandArray(surname, ref surnames);
             Console.WriteLine("Введите должность : ");
-            string post = Console.ReadLine();           
+            string post = Console.ReadLine();
             ExpandArray(post, ref posts);
 
             Console.WriteLine("Данные добавлены! ");
@@ -128,24 +135,24 @@ namespace CSLight
             {
                 Console.WriteLine("Введите фамилию : ");
                 string surnameSearch = Console.ReadLine();
-                bool isFound = false;
-                bool isNotFound = true;
+                bool theFollowingWasFound = false;
+                bool noDossierFound = true;
 
                 for (int i = 0; i < firstArray.Length; i++)
                 {
                     if (firstArray[i] == surnameSearch)
                     {
-                        if (isFound == false)
+                        if (theFollowingWasFound == false)
                         {
                             Console.WriteLine("Найдено следующее : ");
-                            isFound = true;
+                            theFollowingWasFound = true;
                         }
                         Console.WriteLine($"{i + 1}. {firstArray[i]}-{secondArray[i]}");
-                        isNotFound = false;
+                        noDossierFound = false;
                     }
                 }
 
-                if (isNotFound == true)
+                if (noDossierFound == true)
                 {
                     Console.WriteLine("Фамилия не найдена! ");
                 }
@@ -156,4 +163,4 @@ namespace CSLight
             }
         }
     }
-}    
+}
