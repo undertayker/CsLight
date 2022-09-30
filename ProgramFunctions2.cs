@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace CSLight
+namespace Functions
 {
-    internal class Program1
+    internal class Program
     {
         static void Main(string[] args)
         {
-            int health = 0, maxHealth = 10;
-            int mana = 0, maxMana = 10;
+            int health = 0;
+            int maxHealth = 10;
+            int mana = 0;
+            int maxMana = 10;
 
-            while (true)
+            bool isWork = true;
+
+            while (isWork)
             {
-
                 DrawBar(health, maxHealth, ConsoleColor.Red, 0, '_');
                 DrawBar(mana, maxMana, ConsoleColor.Blue, 1, '_');
 
@@ -27,11 +31,10 @@ namespace CSLight
                 mana = Convert.ToInt32(Console.ReadLine());
 
                 Console.Clear();
-
             }
         }
 
-        static void DrawBar(int value, int maxValue, ConsoleColor color, int position, char symbol = ' ' )
+        static void DrawBar(int value, int maxValue, ConsoleColor color, int position, char symbol = ' ')
         {
             ConsoleColor defoultColor = Console.BackgroundColor;
             string bar = "";
@@ -56,4 +59,4 @@ namespace CSLight
             Console.Write(bar + ']');
         }
     }
-}    
+}
