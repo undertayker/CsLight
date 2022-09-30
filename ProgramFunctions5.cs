@@ -11,21 +11,25 @@ namespace Functions
     {
         static void Main(string[] args)
         {
-            Stirring();
+            int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+
+            ShuffleArray(array);
         }
 
-        static void Stirring()
+        static void ShuffleArray(int[] array)
         {
-            int[] stirringTheArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, };
             Random random = new Random();
+            int randomIndex;
+            int shuffledEllement;
 
-            for (int i = stirringTheArray.Length - 1; i >= 1; i--)
+            for (int i = array.Length - 1; i >= 0; i--)
             {
-                int randomNumber = random.Next(i + 1);
-                int shuffleIndex = stirringTheArray[randomNumber];
-                stirringTheArray[randomNumber] = stirringTheArray[i];
-                stirringTheArray[i] = shuffleIndex;
-                Console.WriteLine(stirringTheArray[i]);
+                randomIndex = random.Next(i);
+                shuffledEllement = array[randomIndex];
+                array[randomIndex] = array[i];
+                array[i] = shuffledEllement;
+
+                Console.WriteLine(shuffledEllement + " ");
             }
         }
     }
