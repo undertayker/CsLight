@@ -26,23 +26,23 @@ namespace Functions
 
             while (isPlaing)
             {
-                PlayerRendering(ref userPositionX, ref userPositionY);
+                IsPlayerRendering( ref userPositionX, ref userPositionY);
 
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
 
-                    ChangeDirection(key, ref userDirectionX, ref userDirectionY);
+                    ChangeDirection(key, out userDirectionX, out userDirectionY);
 
                     if (map[userPositionX + userDirectionX, userPositionY + userDirectionY] != wallSymbol)
                     {
-                        MapMovement(ref userPositionX, ref userPositionY, userDirectionX, userDirectionY);
+                        IsMapMovement(ref userPositionX, ref userPositionY, userDirectionX, userDirectionY);
                     }
                 }
             }
         }
 
-        static void PlayerRendering(ref int userPositionX, ref int userPositionY)
+        static void IsPlayerRendering(ref int userPositionX, ref int userPositionY)
         {
             char playerSymbol = '@';
 
@@ -50,7 +50,7 @@ namespace Functions
             Console.Write(playerSymbol);
         }
 
-        static void MapMovement(ref int userPositionX, ref int userPositionY, int userDirectionX, int userDirectionY)
+        static void IsMapMovement(ref int userPositionX, ref int userPositionY, int userDirectionX, int userDirectionY)
         {
             Console.SetCursorPosition(userPositionY, userPositionX);
             Console.Write(" ");
@@ -63,12 +63,14 @@ namespace Functions
             Console.Write(playerSymbol);
         }
 
-        static void ChangeDirection(ConsoleKeyInfo key, ref int userDirectionX, ref int userDirectionY)
+        static void ChangeDirection(ConsoleKeyInfo key, out int userDirectionX, out int userDirectionY)
         {
+            userDirectionX = 0;
+            userDirectionY = 0;
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    userDirectionX = -1; 
+                    userDirectionX = -1;
                     userDirectionY = 0;
                     break;
                 case ConsoleKey.DownArrow:
@@ -76,7 +78,7 @@ namespace Functions
                     userDirectionY = 0;
                     break;
                 case ConsoleKey.LeftArrow:
-                    userDirectionX = 0; 
+                    userDirectionX = 0;
                     userDirectionY = -1;
                     break;
                 case ConsoleKey.RightArrow:
