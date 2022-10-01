@@ -27,7 +27,7 @@ namespace Functions
             while (isPlaing)
             {
                 IsPlayerRendering( ref userPositionX, ref userPositionY);
-
+               
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
@@ -42,25 +42,31 @@ namespace Functions
             }
         }
 
-        static void IsPlayerRendering(ref int userPositionX, ref int userPositionY)
+        static bool IsPlayerRendering(ref int userPositionX, ref int userPositionY)
         {
-            char playerSymbol = '@';
+            char playerSymbol = '@';       
 
             Console.SetCursorPosition(userPositionY, userPositionX);
             Console.Write(playerSymbol);
+
+            return true;
         }
 
-        static void IsMapMovement(ref int userPositionX, ref int userPositionY, int userDirectionX, int userDirectionY)
+        static bool IsMapMovement(ref int userPositionX, ref int userPositionY, int userDirectionX, int userDirectionY)
         {
+            IsPlayerRendering(ref userPositionX, ref userPositionY);
+
             Console.SetCursorPosition(userPositionY, userPositionX);
             Console.Write(" ");
 
             char playerSymbol = '@';
             userPositionX += userDirectionX;
             userPositionY += userDirectionY;
-
+       
             Console.SetCursorPosition(userPositionY, userPositionX);
             Console.Write(playerSymbol);
+
+            return true;
         }
 
         static void ChangeDirection(ConsoleKeyInfo key, out int userDirectionX, out int userDirectionY)
