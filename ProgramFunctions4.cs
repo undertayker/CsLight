@@ -14,59 +14,74 @@ namespace Functions
             Console.CursorVisible = false;
 
             bool isPlaing = true;
-            int userX, userY;
-            int userDx = 0, userDy = 1;
+            int userPositionX;
+            int userPositionY;
+            int userDirectionX = 0;
+            int userDirectionY = 1;
+            char wallSymbol = '#';
 
-            char[,] map = ReadMap("Map", out userX, out userY);
+            char[,] map = ReadMap("Map", out userPositionX, out userPositionY);
 
             DrawMap(map);
 
             while (isPlaing)
             {
-                Console.SetCursorPosition(userY, userX);
-                Console.Write('@');
+                PlayerRendering(ref userPositionX, ref userPositionY);
 
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
 
-                    ChangeDirection(key, ref userDx, ref userDy);
+                    ChangeDirection(key, ref userDirectionX, ref userDirectionY);
 
-                    if (map[userX + userDx, userY + userDy] != '#')
+                    if (map[userPositionX + userDirectionX, userPositionY + userDirectionY] != wallSymbol)
                     {
-                        MapMovement(ref userX, ref userY, userDx, userDy);
+                        MapMovement(ref userPositionX, ref userPositionY, userDirectionX, userDirectionY);
                     }
                 }
             }
         }
 
-        static void MapMovement(ref int userX, ref int userY, int userDx, int userDy)
+        static void PlayerRendering(ref int userPositionX, ref int userPositionY)
         {
-            Console.SetCursorPosition(userY, userX);
-            Console.Write(" ");
+            char playerSymbol = '@';
 
-            userX += userDx;
-            userY += userDy;
-
-            Console.SetCursorPosition(userY, userX);
-            Console.Write('@');
+            Console.SetCursorPosition(userPositionY, userPositionX);
+            Console.Write(playerSymbol);
         }
 
-        static void ChangeDirection(ConsoleKeyInfo key, ref int userDx, ref int userDy)
+        static void MapMovement(ref int userPositionX, ref int userPositionY, int userDirectionX, int userDirectionY)
+        {
+            Console.SetCursorPosition(userPositionY, userPositionX);
+            Console.Write(" ");
+
+            char playerSymbol = '@';
+            userPositionX += userDirectionX;
+            userPositionY += userDirectionY;
+
+            Console.SetCursorPosition(userPositionY, userPositionX);
+            Console.Write(playerSymbol);
+        }
+
+        static void ChangeDirection(ConsoleKeyInfo key, ref int userDirectionX, ref int userDirectionY)
         {
             switch (key.Key)
             {
                 case ConsoleKey.UpArrow:
-                    userDx = -1; userDy = 0;
+                    userDirectionX = -1; 
+                    userDirectionY = 0;
                     break;
                 case ConsoleKey.DownArrow:
-                    userDx = 1; userDy = 0;
+                    userDirectionX = 1;
+                    userDirectionY = 0;
                     break;
                 case ConsoleKey.LeftArrow:
-                    userDx = 0; userDy = -1;
+                    userDirectionX = 0; 
+                    userDirectionY = -1;
                     break;
                 case ConsoleKey.RightArrow:
-                    userDx = 0; userDy = 1;
+                    userDirectionX = 0;
+                    userDirectionY = 1;
                     break;
             }
         }
@@ -83,10 +98,11 @@ namespace Functions
             }
         }
 
-        static char[,] ReadMap(string mapName, out int userX, out int userY)
+        static char[,] ReadMap(string mapName, out int userPositionX, out int userPositionY)
         {
-            userX = 0;
-            userY = 0;
+            char playerSymbol = '@';
+            userPositionX = 0;
+            userPositionY = 0;
             string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
             char[,] map = new char[newFile.Length, newFile[0].Length];
 
@@ -96,10 +112,10 @@ namespace Functions
                 {
                     map[i, j] = newFile[i][j];
 
-                    if (map[i, j] == '@')
+                    if (map[i, j] == playerSymbol)
                     {
-                        userX = i;
-                        userY = j;
+                        userPositionX = i;
+                        userPositionY = j;
                     }
                 }
             }
