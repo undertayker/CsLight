@@ -11,16 +11,16 @@ namespace Functions
     {
         static void Main(string[] args)
         {
-            string[] surnames = new string[0];
-            string[] posts = new string[0];
-            bool isWork = true;
             const string AddToFile = "1";
             const string FileData = "2";
             const string DeleteFile = "3";
             const string SearchFor = "4";
             const string CommandExit = "5";
 
-
+            string[] surnames = new string[0];
+            string[] posts = new string[0];
+            bool isWork = true;
+           
             while (isWork == true)
             {
                 Console.WriteLine($"\n{AddToFile}. Добавить досье \n{FileData}. Вывести все данные досье  \n{DeleteFile}. Удалить досье  \n{SearchFor}. Поиск по фамилии  \n{CommandExit}. Выход");
@@ -59,13 +59,13 @@ namespace Functions
             Console.WriteLine("Данные добавлены! ");
         }
 
-        static void DeleteDossier(ref string[] firstArray, ref string[] secondArray)
+        static void DeleteDossier(ref string[] lastName, ref string[] secondArray)
         {
-            if (firstArray.Length != 0)
+            if (lastName.Length != 0)
             {
                 Console.WriteLine("Введите номер досье для удаления : ");
                 int numberDelete = int.Parse(Console.ReadLine());
-                ReduceArray(numberDelete, ref firstArray);
+                ReduceArray(numberDelete, ref lastName);
                 ReduceArray(numberDelete, ref secondArray);
 
                 Console.WriteLine("Данные удалены ! ");
@@ -89,13 +89,13 @@ namespace Functions
             array = tempArray;
         }
 
-        static void OutputInfoDossier(string[] firstArray, string[] secondArray)
+        static void OutputInfoDossier(string[] lastName, string[] title)
         {
-            if (firstArray.Length != 0)
+            if (lastName.Length != 0)
             {
-                for (int i = 0; i < firstArray.Length; i++)
+                for (int i = 0; i < lastName.Length; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {firstArray[i]} - {secondArray[i]}");
+                    Console.WriteLine($"{i + 1}. {lastName[i]} - {title[i]}");
                 }
             }
             else
@@ -121,7 +121,6 @@ namespace Functions
                 }
 
                 array = tempArray;
-
             }
             else
             {
@@ -129,24 +128,24 @@ namespace Functions
             }
         }
 
-        static void SearchDossier(string[] firstArray, string[] secondArray)
+        static void SearchDossier(string[] lastName, string[] title)
         {
-            if (firstArray.Length != 0)
+            if (lastName.Length != 0)
             {
                 Console.WriteLine("Введите фамилию : ");
                 string surnameSearch = Console.ReadLine();
                 bool fileNotFound = true;
 
-                for (int i = 0; i < firstArray.Length; i++)
+                for (int i = 0; i < lastName.Length; i++)
                 {
-                    if (firstArray[i] == surnameSearch)
+                    if (lastName[i] == surnameSearch)
                     {
                         if (fileNotFound == true)
                         {
                             Console.WriteLine("Найдено следующее : ");
                             fileNotFound = true;
                         }
-                        Console.WriteLine($"{i + 1}. {firstArray[i]}-{secondArray[i]}");
+                        Console.WriteLine($"{i + 1}. {lastName[i]}-{title[i]}");
                         fileNotFound = false;
                     }
                 }
