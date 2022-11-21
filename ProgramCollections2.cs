@@ -11,7 +11,6 @@ namespace Сollections
         static void Main(string[] args)
         {
             int storeBill = 0;
-            bool isWork = true;
             Queue<int> purchaseAmount = new Queue<int>();
 
             purchaseAmount.Enqueue(200);
@@ -20,7 +19,7 @@ namespace Сollections
             purchaseAmount.Enqueue(2204);
             purchaseAmount.Enqueue(3400);
 
-            while (isWork)
+            for (int i = 0; i < purchaseAmount.Count; i--)
             {
                 foreach (var amount in purchaseAmount)
                 {
@@ -32,7 +31,7 @@ namespace Сollections
                 Console.WriteLine("Сейчас в очереди покупатель который набрал продуктов на сумму " + purchaseAmount.Dequeue() + " Рублей ");
                 Console.WriteLine("Cчет магазина составляет " + storeBill + " рублей ");
                 Console.ReadKey();
-            }           
+            }
         }
     }
 }
