@@ -26,8 +26,9 @@ namespace Сollections
                 Console.Clear();
 
                 if (int.TryParse(userInput, out int result))
-                {
+                {         
                     numbers.Add(result);
+                    Console.Write("Ваши введенные числа : ");
                 }
                 else if (userInput == sumCommand)
                 {
@@ -47,8 +48,6 @@ namespace Сollections
                     Console.WriteLine("Всего хорошего!!");
                 }
 
-                Console.Write("Ваши введенные числа : ");
-              
                 foreach (int i in numbers)
                 {
                     Console.Write(i + ",");
