@@ -11,18 +11,17 @@ namespace Сollections
         static void Main(string[] args)
         {
             List<int> numbers = new List<int>();
-            string userInput;
             string sumCommand = "sum";
             string exitCommand = "exit";
 
-            bool programmeWork = true;
+            bool isProgrammeWork = true;
 
             Console.WriteLine("Добро пожаловать в программу!");
 
-            while (programmeWork)
+            while (isProgrammeWork)
             {
                 Console.WriteLine($"\nДля суммы чисел введите команду : {sumCommand}\nДля выхода из программы введите команду : {exitCommand}\nВведите ваше число : ");
-                userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
                 Console.Clear();
 
                 if (int.TryParse(userInput, out int result))
@@ -33,24 +32,23 @@ namespace Сollections
                 else if (userInput == sumCommand)
                 {
                     int sum = 0;
-
                     for (int i = 0; i < numbers.Count; i++)
-                    {                       
+                    {
                         sum += numbers[i];
                     }
-                    Console.WriteLine("Ваше произведение чисел " + sum);
+                    Console.WriteLine($"Ваше произведение чисел " + sum);
                     numbers.Clear();
                     Console.WriteLine("Лист с вашими числами очищен, введите числа занаво !");
                 }
-                else if (userInput == exitCommand)
+                else 
                 {
-                    programmeWork = false;
-                    Console.WriteLine("Всего хорошего!!");
+                    isProgrammeWork = false;
+                    Console.WriteLine("Всего хорошего!!");                   
                 }
 
-                foreach (int i in numbers)
+                foreach (int enteredNumbers  in numbers)
                 {
-                    Console.Write(i + ",");
+                    Console.Write(enteredNumbers  + ",");
                 }
             }
         }
