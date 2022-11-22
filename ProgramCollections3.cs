@@ -49,10 +49,12 @@ namespace Сollections
         static void Sum(List<int> numbers)
         {
             int sum = 0;
+
             for (int i = 0; i < numbers.Count; i++)
             {
                 sum += numbers[i];
             }
+
             Console.WriteLine($"Ваше произведение чисел " + sum);
             numbers.Clear();
             Console.WriteLine("Лист с вашими числами очищен, введите числа занаво !");
