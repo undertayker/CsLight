@@ -40,10 +40,15 @@ namespace Сollections
                     numbers.Clear();
                     Console.WriteLine("Лист с вашими числами очищен, введите числа занаво !");
                 }
-                else 
+                else if(userInput == exitCommand)
                 {
                     isProgrammeWork = false;
                     Console.WriteLine("Всего хорошего!!");                   
+                }
+                else
+                {
+                    isProgrammeWork = false;
+                    Console.WriteLine("Такой команды нет!");
                 }
 
                 foreach (int enteredNumbers  in numbers)
