@@ -31,31 +31,31 @@ namespace Сollections
                 }
                 else if (userInput == sumCommand)
                 {
-                    int sum = 0;
-                    for (int i = 0; i < numbers.Count; i++)
-                    {
-                        sum += numbers[i];
-                    }
-                    Console.WriteLine($"Ваше произведение чисел " + sum);
-                    numbers.Clear();
-                    Console.WriteLine("Лист с вашими числами очищен, введите числа занаво !");
+                    Sum(numbers);             
                 }
                 else if(userInput == exitCommand)
                 {
                     isProgrammeWork = false;
                     Console.WriteLine("Всего хорошего!!");                   
                 }
-                else
-                {
-                    isProgrammeWork = false;
-                    Console.WriteLine("Такой команды нет!");
-                }
 
-                foreach (int enteredNumbers  in numbers)
+                foreach (int number  in numbers)
                 {
-                    Console.Write(enteredNumbers  + ",");
+                    Console.Write(number  + ",");
                 }
             }
+        }
+
+        static void Sum(List<int> numbers)
+        {
+            int sum = 0;
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                sum += numbers[i];
+            }
+            Console.WriteLine($"Ваше произведение чисел " + sum);
+            numbers.Clear();
+            Console.WriteLine("Лист с вашими числами очищен, введите числа занаво !");
         }
     }
 }
