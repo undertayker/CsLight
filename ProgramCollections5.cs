@@ -15,24 +15,29 @@ namespace Сollections
 
             List<int> numbers = new List<int>();
 
-            Write(numbers, firstArray.Length, firstArray);
-            Write(numbers, firstArray.Length, secondArray);
+            Association(numbers, firstArray);
+            Association(numbers, secondArray);
 
-            foreach (int number in numbers)
-            {
-                Console.WriteLine(number);
-            }
+            Output(numbers);
         }
 
-        static void Write(List<int> numbers, int arrayLength, int[] array)
+        static void Association(List<int> numbers, int[] array)
         {
-            for (int i = 0; i < arrayLength; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 if (numbers.Contains(array[i]) == false)
                 {
                     numbers.Add(array[i]);
                 }
-            }                       
-        }        
+            }
+        }
+
+        static void Output(List<int> numbers)
+        {
+            foreach (int number in numbers)
+            {
+                Console.WriteLine(number);
+            }
+        }
     }
 }
