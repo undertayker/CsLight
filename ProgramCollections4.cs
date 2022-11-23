@@ -15,7 +15,7 @@ namespace Сollections
             const string DeleteFile = "3";
             const string CommandExit = "4";
 
-            Dictionary<string, string> data = new Dictionary<string, string>();
+            Dictionary<string, string> dossiers = new Dictionary<string, string>();
 
             bool isWork = true;
 
@@ -25,16 +25,16 @@ namespace Сollections
                 string userInput = Console.ReadLine();
                 Console.Clear();
 
-                switch (userInput) 
+                switch (userInput)
                 {
                     case AddToFile:
-                        CreateDossier(data);
+                        CreateDossier(dossiers);
                         break;
                     case FileData:
-                        DataOutput(data);
+                        DataOutput(dossiers);
                         break;
                     case DeleteFile:
-                        DeleteTheDossier(data);
+                        DeleteDossier(dossiers);
                         break;
                     case CommandExit:
                         isWork = false;
@@ -44,46 +44,46 @@ namespace Сollections
             }
         }
 
-        static void CreateDossier(Dictionary<string,string> data)
+        static void CreateDossier(Dictionary<string, string> dossiers)
         {
             Console.WriteLine("Введите вашу Фамилию : ");
-            string surnames = Console.ReadLine();
+            string surname = Console.ReadLine();
             Console.WriteLine("Введите вашу должность");
-            string posts = Console.ReadLine();
-            
-            if (data.ContainsKey(surnames))
+            string post = Console.ReadLine();
+
+            if (dossiers.ContainsKey(surname))
             {
-                Console.WriteLine("Досье " + surnames + "-" + data[surnames] + " Уже существует!!" );
+                Console.WriteLine("Досье " + surname + "-" + dossiers[surname] + " Уже существует!!");
             }
             else
             {
-                Console.WriteLine("Досье добавлено " + surnames + " - " + posts );
-                data.Add(surnames, posts);
+                Console.WriteLine("Досье добавлено " + surname + " - " + post);
+                dossiers.Add(surname, post);
             }
         }
 
-        static void DataOutput(Dictionary<string,string> data)
+        static void DataOutput(Dictionary<string, string> dossiers)
         {
-            foreach (var file in data)
+            foreach (var file in dossiers)
             {
                 Console.WriteLine(file.Key + "-" + file.Value);
             }
         }
 
-        static void DeleteTheDossier(Dictionary<string,string> data)
+        static void DeleteDossier(Dictionary<string, string> dossiers)
         {
             Console.WriteLine("Укажите фамилию, которую хотите удалить из досье : ");
             string userInput = Console.ReadLine();
 
-            if (data.ContainsKey(userInput))
+            if (dossiers.ContainsKey(userInput))
             {
                 Console.WriteLine("Ваше досье удалено!");
-                data.Remove(userInput);
+                dossiers.Remove(userInput);
             }
             else
             {
                 Console.WriteLine("Такого досье не существует!");
-            }       
+            }
         }
     }
 }
