@@ -24,6 +24,7 @@ namespace Сollections
                 Console.WriteLine($"\n{AddToFile}. Добавить досье \n{FileData}. Вывести все данные досье  \n{DeleteFile}. Удалить досье  \n{CommandExit}. Выход");
                 string userInput = Console.ReadLine();
                 Console.Clear();
+
                 switch (userInput) 
                 {
                     case AddToFile:
@@ -74,7 +75,15 @@ namespace Сollections
             Console.WriteLine("Укажите фамилию, которую хотите удалить из досье : ");
             string userInput = Console.ReadLine();
 
-            data.Remove(userInput);
+            if (data.ContainsKey(userInput))
+            {
+                Console.WriteLine("Ваше досье удалено!");
+                data.Remove(userInput);
+            }
+            else
+            {
+                Console.WriteLine("Такого досье не существует!");
+            }       
         }
     }
 }
