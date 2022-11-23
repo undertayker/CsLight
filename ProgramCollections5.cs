@@ -15,13 +15,13 @@ namespace Сollections
 
             List<int> numbers = new List<int>();
 
-            Association(numbers, firstArray);
-            Association(numbers, secondArray);
+            isAssociation(numbers, firstArray);
+            isAssociation(numbers, secondArray);
 
-            Output(numbers);
+            isOutput(numbers);
         }
 
-        static void Association(List<int> numbers, int[] array)
+        static void isAssociation(List<int> numbers, int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace Сollections
             }
         }
 
-        static void Output(List<int> numbers)
+        static void isOutput(List<int> numbers)
         {
             foreach (int number in numbers)
             {
