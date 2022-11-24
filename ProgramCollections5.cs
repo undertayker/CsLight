@@ -15,13 +15,13 @@ namespace Сollections
 
             List<int> numbers = new List<int>();
 
-            isAssociation(numbers, firstArray);
-            isAssociation(numbers, secondArray);
+            TheUnification(numbers, firstArray);
+            TheUnification(numbers, secondArray);
 
-            isOutput(numbers);
+            TheConclusion(numbers);
         }
 
-        static void isAssociation(List<int> numbers, int[] array)
+        static void TheUnification(List<int> numbers, int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace Сollections
             }
         }
 
-        static void isOutput(List<int> numbers)
+        static void TheConclusion(List<int> numbers)
         {
             foreach (int number in numbers)
             {
