@@ -15,13 +15,13 @@ namespace Сollections
 
             List<int> numbers = new List<int>();
 
-            ToDoUnification(numbers, firstArray);
-            ToDoUnification(numbers, secondArray);
+            AddInclusiveElements(numbers, firstArray);
+            AddInclusiveElements(numbers, secondArray);
 
-            ToDoConclusion(numbers);
+            Show(numbers);
         }
 
-        static void ToDoUnification(List<int> numbers, int[] array)
+        static void AddInclusiveElements(List<int> numbers, int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace Сollections
             }
         }
 
-        static void ToDoConclusion(List<int> numbers)
+        static void Show(List<int> numbers)
         {
             foreach (int number in numbers)
             {
