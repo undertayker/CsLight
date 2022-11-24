@@ -15,13 +15,13 @@ namespace Сollections
 
             List<int> numbers = new List<int>();
 
-            TheUnification(numbers, firstArray);
-            TheUnification(numbers, secondArray);
+            ToDoUnification(numbers, firstArray);
+            ToDoUnification(numbers, secondArray);
 
-            TheConclusion(numbers);
+            ToDoConclusion(numbers);
         }
 
-        static void TheUnification(List<int> numbers, int[] array)
+        static void ToDoUnification(List<int> numbers, int[] array)
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -32,7 +32,7 @@ namespace Сollections
             }
         }
 
-        static void TheConclusion(List<int> numbers)
+        static void ToDoConclusion(List<int> numbers)
         {
             foreach (int number in numbers)
             {
