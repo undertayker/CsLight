@@ -10,29 +10,30 @@ namespace OOP
     {
         static void Main(string[] args)
         {
-            Player player = new Player("Alex", 100, 50, 130);
+            Player player = new Player("Alex", 100, 50, 24);
+
             player.ShowStats();
         }
     }
 
-    class Player 
+    class Player
     {
-        public string Name;
-        public int Health;
-        public int Armor;
-        public int Damage;
+        private string _name;
+        private int _health;
+        private int _armor;
+        private int _damage;
 
         public Player(string name, int health, int armor, int damage)
         {
-            Name = name;
-            Health = health;
-            Armor = armor;
-            Damage = damage;
+            _name = name;
+            _health = health;
+            _armor = armor;
+            _damage = damage;
         }
 
         public void ShowStats()
         {
-            Console.WriteLine($"Имя - {Name}\nЖизни - {Health}\nБроня - {Armor}\nУрон - {Damage} ");
+            Console.WriteLine($"Имя - {_name}\nЖизни - {_health}\nБроня - {_armor}\nУрон - {_damage}");
         }
     }
 }
