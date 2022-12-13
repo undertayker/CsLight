@@ -6,241 +6,301 @@ using System.Threading.Tasks;
 
 namespace OOP
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            Database database = new Database();
-            database.Work();
-        }
-    }
+            BookStorage bookStorage = new BookStorage();
+            bool isWork = true;
 
-    class Database
-    {
-        private bool _isWork = true;
-        private List<Player> _players = new List<Player>();
+            const string ShowAllBooks = "Показать все книги в хранилище ";
+            const string AddBooks = "Добавить книгу ";
+            const string DeleteBooks = "Удалить книгу ";
+            const string Exit = "Выход";
+            const string SearchBook = "Поиск книги";
 
-        private void AddPlayer()
-        {
-            string name;
-            string level;
-            int result;
-            bool isStringNumber;
-
-            Console.Write("Введите никнейм игрока: ");
-            name = Console.ReadLine();
-            Console.Write("Какой у него уровень: ");
-            isStringNumber = CheckString(out level, out result);
-
-            if (isStringNumber)
+            while (isWork == true)
             {
-                _players.Add(new Player(name, result));
-            }
-            else
-            {
-                GetMessege("Введите корректные данные");
-            }
-            Console.Clear();
-        }
-
-        private void GetMessege(string message)
-        {
-            Console.WriteLine(message);
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-        private bool CheckString(out string userInput, out int result)
-        {
-            userInput = " ";
-            result = 0;
-            bool isStringNumber;
-
-            userInput = Console.ReadLine();
-            isStringNumber = int.TryParse(userInput, out result);
-            return isStringNumber;
-        }
-
-        private void ShowInfo()
-        {
-            Console.WriteLine("База данных игроков:");
-
-            for (int i = 0; i < _players.Count; i++)
-            {
-                Console.Write($"{i + 1}. ");
-                _players[i].ShowDetails();
-            }
-            Console.ReadKey();
-            Console.Clear();
-        }
-
-        private void RemovePlayer()
-        {
-            string userInput;
-            int result;
-            bool isStringNumber;
-
-            if (_players.Count > 0)
-            {
-                ShowInfo();
-                Console.Write("Какого игрока удалить из базы данных, ведите порядковый номер: ");
-                isStringNumber = CheckString(out userInput, out result);
-
-                if (isStringNumber)
-                {
-                    _players.RemoveAt(result - 1);
-                    Console.Clear();
-                }
-                else
-                {
-                    GetMessege("Не корректный ввод");
-                }
-            }
-            else
-            {
-                GetMessege("База данных пуста");
-            }
-        }
-
-        private void BanPlayer()
-        {
-            string userInput;
-            int result;
-            bool isConsoleBanActive = false;
-
-            if (_players.Count > 0)
-            {
-                ShowInfo();
-                Console.Write("Введите порядковый номер игрока, которого хотите забанить: ");
-                isConsoleBanActive = CheckString(out userInput, out result);
-                Console.Clear();
-
-                if (isConsoleBanActive)
-                {
-                    if (_players[result - 1].IsBanned == false)
-                    {
-                        _players[result - 1].AddToBan();
-                    }
-                    Console.Clear();
-                }
-                else
-                {
-                    GetMessege("Данные не корректны");
-                }
-            }
-            else
-            {
-                GetMessege("Ваш сервер пустой");
-            }
-        }
-
-        private void UnbanPlayer()
-        {
-            string userInput;
-            int result;
-            bool isConsoleBanActive = false;
-
-            if (_players.Count > 0)
-            {
-                ShowInfo();
-                Console.Write("Введите порядковый номер игрока, которого хотите разбанить: ");
-                isConsoleBanActive = CheckString(out userInput, out result);
-                Console.Clear();
-
-                if (isConsoleBanActive)
-                {
-                    if (_players[result - 1].IsBanned == true)
-                    {
-                        _players[result - 1].RemoveFromBan();
-                    }
-                    Console.Clear();
-                }
-                else
-                {
-                    GetMessege("Данные не корректны");
-                }
-            }
-            else
-            {
-                GetMessege("Ваш сервер пустой");
-            }
-        }
-
-        public void Work()
-        {
-            string userInput;
-
-            while (_isWork)
-            {
-                Console.WriteLine("Добро пожаловать, это меню базы данных.");
-                Console.WriteLine("1 - Добавить игрока.\n2 - Список игроков.\n3 - Забанить игрока.\n4 - Разбанить игрока.\n5 - Удалить игрока.\n6 - Выход.");
-                Console.Write("Выберите команду: ");
-                userInput = Console.ReadLine();
-                Console.Clear();
-
-                switch (userInput)
+                Console.WriteLine($"\n1. {ShowAllBooks}\n2. {AddBooks}\n3. {DeleteBooks}\n4. {SearchBook}\n5. {Exit}");
+                switch (Console.ReadLine())
                 {
                     case "1":
-                        AddPlayer();
+                        bookStorage.ShowAllBook();
                         break;
+
                     case "2":
-                        ShowInfo();
+                        bookStorage.Add();
                         break;
+
                     case "3":
-                        BanPlayer();
+                        bookStorage.Delete();
                         break;
+
                     case "4":
-                        UnbanPlayer();
+                        bookStorage.Search();
                         break;
+
                     case "5":
-                        RemovePlayer();
+                        isWork = false;
                         break;
-                    case "6":
-                        _isWork = false;
-                        break;
+
                     default:
-                        Console.WriteLine("Не корректный ввод");
+                        Console.WriteLine("\nНеккоректный ввод\n");
                         break;
                 }
             }
         }
     }
 
-    class Player
+    class Book
     {
-        private string _name;
-        private int _level;
-        private string _flag;
-        public bool IsBanned { get; private set; }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public int YearRelease { get; private set; }
 
-        public Player(string name, int level)
+        public Book(string title, string author, int yearRelease)
         {
-            _name = name;
-            _level = level;
-            IsBanned = false;
+            Title = title;
+            Author = author;
+            YearRelease = yearRelease;
         }
 
-        public void RemoveFromBan()
+        public void ShowInfo()
         {
-            IsBanned = false;
+            Console.WriteLine($"\nНазвание книги: {Title} \nАвтор: {Author} \nГод релиза : {YearRelease}\n");
         }
+    }
 
-        public void AddToBan()
-        {
-            IsBanned = true;
-        }
+    class BookStorage
+    {
+        private List<Book> _books = new List<Book>();
 
-        public void ShowDetails()
+        public void Add()
         {
-            if (IsBanned == false)
+            Console.WriteLine("Введите название книги");
+            string title = Console.ReadLine();
+
+            Console.WriteLine("\nВведите автора книги: \n");
+            string author = Console.ReadLine();          
+
+            Console.WriteLine("\nВведите год релиза книги: \n");
+            bool userInput = int.TryParse(Console.ReadLine(), out int yearRelease);
+
+            if (userInput != false)
             {
-                _flag = "не забанен";
+                Book book = new Book(title, author, yearRelease);
+                _books.Add(book);
+
+                Console.WriteLine("\nКнига добавлена!\n");
             }
             else
             {
-                _flag = "забанен";
+                Console.WriteLine("\nНеккоректный ввод\n");
             }
-            Console.WriteLine($"Ник персонажа - {_name}, уровень - {_level}, статус бана - {_flag}");
+        }
+
+        public void Delete()
+        {
+            if (_books.Count != 0)
+            {
+                const string PositiveAnswer = "Да";
+                const string NegativeAnswer = "Нет и продолжить поиск";
+
+                bool isFound = false;
+                bool isWork;
+
+                Console.WriteLine("\nВведите полное название книги\n");
+                string input = Console.ReadLine();
+
+                for (int i = 0; i < _books.Count; i++)
+                {
+                    if (_books[i].Title == input)
+                    {
+                        isWork = true;
+                        isFound = true;
+                        Console.WriteLine("\nНайдена книга\n");
+                        _books[i].ShowInfo();
+
+                        while (isWork == true)
+                        {
+                            Console.WriteLine($"\nУдалить данную книгу ?\n1. {PositiveAnswer} \n2. {NegativeAnswer}");
+                            string input2 = Console.ReadLine();
+
+                            switch (input2)
+                            {
+                                case "1":
+                                    DeleteBook(i, ref isWork);
+                                    break;
+
+                                case "2":
+                                    isWork = false;
+                                    break;
+
+                                default:
+                                    Console.WriteLine("\nНеккоректный ввод\n");
+                                    break;
+                            }
+                        }
+                    }
+                    else if (isFound == false)
+                    {
+                        Console.WriteLine("\nКниги с данным названием не найдено\n");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nВ хранилище ещё нет книг\n");
+            }
+        }
+
+        public void ShowAllBook()
+        {
+            if (_books.Count > 0)
+            {
+                foreach (Book book in _books)
+                {
+                    book.ShowInfo();
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nВ хранилище ещё нет книг\n");
+            }
+        }
+
+        public void Search()
+        {
+            const string ByName = "По названию"; 
+            const string ByAuthor = "По автору";
+            const string ByYearOfRelese = "По году релиза"; 
+            const string Exit = "Выход";
+
+            if (_books.Count > 0)
+            {
+                bool isWork = true;
+
+                while (isWork == true)
+                {
+                    Console.WriteLine($"\n1. {ByName}\n2. {ByAuthor}\n3. {ByYearOfRelese}\n4. {Exit}");
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            SearchTitle();
+                            break;
+
+                        case "2":
+                            SearchAuthor();
+                            break;
+
+                        case "3":
+                            SearchYearRelease();
+                            break;
+
+                        case "4":
+                            isWork = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("\nНеккоректный ввод\n");
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nВ хранилище ещё нет книг\n");
+            }
+        }
+
+        private void DeleteBook(int key, ref bool isWork)
+        {
+            _books.RemoveAt(key);
+            isWork = false;
+            Console.WriteLine("\nКнига удалена!\n");
+        }
+
+        private void SearchTitle()
+        {
+            bool isFound = false;
+            Console.WriteLine("\nВведите полное название книги\n");
+            string input = Console.ReadLine();
+
+            foreach (Book book in _books)
+            {
+                if (book.Title == input)
+                {
+                    if (isFound == false)
+                    {
+                        Console.WriteLine("\nРезультаты поиска\n");
+                    }
+                    book.ShowInfo();
+                    isFound = true;
+                }
+            }
+
+            if (isFound == false)
+            {
+                Console.WriteLine("\nКнига с данным названием не найдена\n");
+            }
+        }
+
+        private void SearchAuthor()
+        {
+            bool isFound = false;
+            Console.WriteLine("\nВведите автора\n");
+            string input = Console.ReadLine();
+
+            foreach (Book book in _books)
+            {
+                if (book.Author == input)
+                {
+                    if (isFound == false)
+                    {
+                        Console.WriteLine("\nРезультаты поиска\n");
+                    }
+                    book.ShowInfo();
+                    isFound = true;
+                }
+            }
+
+            if (isFound == false)
+            {
+                Console.WriteLine("\nКнига от данного автора не найдена\n");
+            }
+        }
+
+        private void SearchYearRelease()
+        {
+            bool isFound = false;
+
+            Console.WriteLine("\nВведите год релиза\n");
+            bool userInput = int.TryParse(Console.ReadLine(), out int input);
+
+            if (userInput != false)
+            {
+                foreach (Book book in _books)
+                {
+                    if (book.YearRelease == input)
+                    {
+                        if (isFound == false)
+                        {
+                            Console.WriteLine("\nРезультаты поиска\n");
+                        }
+                        book.ShowInfo();
+                        isFound = true;
+                    }
+                }
+
+                if (isFound == false)
+                {
+                    Console.WriteLine("\nКнига данного года релиза не найдена\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nНеккоректный ввод\n");
+            }
         }
     }
 }
