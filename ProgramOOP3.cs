@@ -42,7 +42,7 @@ namespace OOP
                     "\n" + BanPlayerCommand + " - Бан по ID." +
                     "\n" + UnbanPlayerCommand + " - Разбан по ID." +
                     "\n" + ExitCommand + " - Выход");
-                
+
                 userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -99,7 +99,7 @@ namespace OOP
 
         private void DeletePlayer()
         {
-            if (TryGetPlayer(out Player player) == true)
+            if (TryGetPlayer(out Player player))
             {
                 _players.Remove(player);
                 Console.WriteLine("Игрок успешно удалён!");
@@ -108,7 +108,7 @@ namespace OOP
 
         private void BanPlayer()
         {
-            if (TryGetPlayer(out Player player) == true)
+            if (TryGetPlayer(out Player player))
             {
                 player.BanPlayer();
                 Console.WriteLine("Игрок забанен!");
@@ -117,7 +117,7 @@ namespace OOP
 
         private void UnbanPlayer()
         {
-            if (TryGetPlayer(out Player player) == true)
+            if (TryGetPlayer(out Player player))
             {
                 player.UnbanPlayer();
                 Console.WriteLine("Игрок разбанен!");
@@ -134,14 +134,14 @@ namespace OOP
                 string userInput = Console.ReadLine();
                 isNumber = int.TryParse(userInput, out int number);
 
-                if (isNumber == true)
+                if (isNumber)
                 {
                     result = number;
                 }
                 else
                 {
                     Console.WriteLine("Введите число.");
-                }                 
+                }
             }
 
             return result;
@@ -149,29 +149,29 @@ namespace OOP
 
         private bool TryGetPlayer(out Player player)
         {
+
+            int idToFind;
+            bool userInput;
+            Console.WriteLine("Введите ID игрока.");
+            userInput = int.TryParse(Console.ReadLine(), out idToFind);
+
+            if (userInput)
             {
-                int idToFind;
-                bool userInput;
-                Console.WriteLine("Введите ID игрока.");
-                userInput = int.TryParse(Console.ReadLine(), out idToFind);
-
-                if (userInput)
+                for (int i = 0; i < _players.Count; i++)
                 {
-                    for (int i = 0; i < _players.Count; i++)
+                    if (_players[i].Id == idToFind)
                     {
-                        if (_players[i].Id == idToFind)
-                        {
-                            player = _players[i];
+                        player = _players[i];
 
-                            return true;
-                        }
+                        return true;
                     }
                 }
-
-                Console.WriteLine("Такого игрока нет.");
-                player = null;
-                return false;
             }
+
+            Console.WriteLine("Такого игрока нет.");
+            player = null;
+            return false;
+
         }
     }
 
