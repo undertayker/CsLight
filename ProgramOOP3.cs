@@ -10,12 +10,12 @@ namespace OOP
     {
         static void Main(string[] args)
         {
-            Data dataPlayers = new Data();
+            DataBase dataPlayers = new DataBase();
             dataPlayers.Work();
         }
     }
 
-    class Data
+    class DataBase
     {
         private int nextIdNumber = 100;
         private List<Player> _players = new List<Player>();
@@ -110,7 +110,7 @@ namespace OOP
         {
             if (TryGetPlayer(out Player player))
             {
-                player.BanPlayer();
+                player.BanUser();
                 Console.WriteLine("Игрок забанен!");
             }
         }
@@ -119,7 +119,7 @@ namespace OOP
         {
             if (TryGetPlayer(out Player player))
             {
-                player.UnbanPlayer();
+                player.UnbanUser();
                 Console.WriteLine("Игрок разбанен!");
             }
         }
@@ -151,11 +151,11 @@ namespace OOP
         {
 
             int idToFind;
-            bool userInput;
+            bool isUserInput;
             Console.WriteLine("Введите ID игрока.");
-            userInput = int.TryParse(Console.ReadLine(), out idToFind);
+            isUserInput = int.TryParse(Console.ReadLine(), out idToFind);
 
-            if (userInput)
+            if (isUserInput)
             {
                 for (int i = 0; i < _players.Count; i++)
                 {
@@ -197,12 +197,12 @@ namespace OOP
             Console.WriteLine("Имя игрока : " + _name + " Уровень : " + _level + " ID : " + _id + " Забанен : " + _isBanned);
         }
 
-        public void BanPlayer()
+        public void BanUser()
         {
             _isBanned = true;
         }
 
-        public void UnbanPlayer()
+        public void UnbanUser()
         {
             _isBanned = false;
         }
