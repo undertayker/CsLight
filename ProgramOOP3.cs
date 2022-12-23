@@ -10,12 +10,12 @@ namespace OOP
     {
         static void Main(string[] args)
         {
-            DataBase dataPlayers = new DataBase();
+            Database dataPlayers = new Database();
             dataPlayers.Work();
         }
     }
 
-    class DataBase
+    class Database
     {
         private int nextIdNumber = 100;
         private List<Player> _players = new List<Player>();
@@ -149,7 +149,6 @@ namespace OOP
 
         private bool TryGetPlayer(out Player player)
         {
-
             int idToFind;
             bool isUserInput;
             Console.WriteLine("Введите ID игрока.");
