@@ -4,27 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Сollections
+namespace OOP
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Deck deck = new Deck();
-            Player player = new Player();
-            bool isWorks = true;
             const string TakeCardCommand = "1";
-            const string TakeSeveralCardsCommad = "2";
+            const string TakeSeveralCardsCommand = "2";
             const string ShowHandCommand = "3";
             const string ExitCommand = "4";
 
+            Deck deck = new Deck();
+            Player player = new Player();
+            bool isWorks = true;
+           
             while (isWorks)
             {
-                Console.WriteLine($"Выберете действие." +
-                    $"\nВзять карту, нажмите - {TakeCardCommand}\n" +
-                    $"Взять несколько карт - {TakeSeveralCardsCommad}" +
-                    $"\nПосмотреть взятые карте, нажмите - {ShowHandCommand}\n" +
-                    $"Завершить работу программ, нажмите - {ExitCommand}");
+                Console.WriteLine($"Добро пожаловать в программу! Выберете действие." +
+                    $"\n{TakeCardCommand} - Взять карту из колоды\n" +
+                    $"{TakeSeveralCardsCommand} - Взять несколько карт из колоды " +
+                    $"\n{ShowHandCommand} - Посмотреть взятые карты \n" +
+                    $"{ExitCommand} - Завершить работу программы");
 
                 string userInput = Console.ReadLine();
 
@@ -32,7 +33,7 @@ namespace Сollections
                 {
                     player.TakeCard(deck.GiveCard());
                 }
-                else if (userInput == TakeSeveralCardsCommad)
+                else if (userInput == TakeSeveralCardsCommand)
                 {
                     player.TakeSeveralCards(deck.GiveCard());
                 }
@@ -71,7 +72,7 @@ namespace Сollections
 
     class Deck
     {
-        private static List<Card> _cards = new List<Card>();
+        private  List<Card> _cards = new List<Card>();
 
         public Deck()
         {
@@ -92,7 +93,7 @@ namespace Сollections
             if (_cards.Count > 0)
             {
                 Card card = _cards[0];
-                _cards.RemoveAt(0);
+                _cards.Remove(card);
                 return card;
             }
             else
@@ -102,7 +103,7 @@ namespace Сollections
             }
         }
 
-        private static void Fill(string[] value, string[] suit)
+        private void Fill(string[] value, string[] suit)
         {
             for (int i = 0; i < value.Length; i++)
             {
