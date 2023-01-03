@@ -15,10 +15,9 @@ namespace OOP
             const string ShowHandCommand = "3";
             const string ExitCommand = "4";
 
-            Deck deck = new Deck();
             Player player = new Player();
             bool isWorks = true;
-           
+
             while (isWorks)
             {
                 Console.WriteLine($"Добро пожаловать в программу! Выберете действие." +
@@ -31,11 +30,11 @@ namespace OOP
 
                 if (userInput == TakeCardCommand)
                 {
-                    player.TakeCard(deck.GiveCard());
+                    player.TakeCard();
                 }
                 else if (userInput == TakeSeveralCardsCommand)
                 {
-                    player.TakeSeveralCards(deck.GiveCard());
+                    player.TakeSeveralCards();
                 }
                 else if (userInput == ShowHandCommand)
                 {
@@ -72,7 +71,7 @@ namespace OOP
 
     class Deck
     {
-        private  List<Card> _cards = new List<Card>();
+        private List<Card> _cards = new List<Card>();
 
         public Deck()
         {
@@ -130,10 +129,12 @@ namespace OOP
     class Player
     {
         private List<Card> _hand = new List<Card>();
-        private Deck _deck = new Deck();
+        Deck _deck = new Deck();
 
-        public void TakeCard(Card card)
+        public void TakeCard()
         {
+            Card card = _deck.GiveCard();
+
             if (card == null)
             {
                 Console.WriteLine("В колоде закончились карты!");
@@ -144,7 +145,7 @@ namespace OOP
             }
         }
 
-        public void TakeSeveralCards(Card card)
+        public void TakeSeveralCards()
         {
             Console.WriteLine("Сколько карт Вы хотите взять?");
             bool isNumber = int.TryParse(Console.ReadLine(), out int input);
@@ -153,7 +154,7 @@ namespace OOP
             {
                 for (int i = 0; i < input; i++)
                 {
-                    card = _deck.GiveCard();
+                    Card card = _deck.GiveCard();
                     _hand.Add(card);
                 }
             }
@@ -178,4 +179,4 @@ namespace OOP
             }
         }
     }
-}
+} 
