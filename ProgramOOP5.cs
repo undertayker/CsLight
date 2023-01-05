@@ -30,19 +30,19 @@ namespace OOP
                 switch (Console.ReadLine())
                 {
                     case ShowAllBookCommand:
-                        bookStorage.ShowAllBook();
+                        bookStorage.ShowAllBooks();
                         break;
 
                     case AddBookCommand:
-                        bookStorage.Add();
+                        bookStorage.AddBooks();
                         break;
 
                     case DeleteBookCommand:
-                        bookStorage.Delete();
+                        bookStorage.DeleteBooks();
                         break;
 
                     case SearchBookCommand:
-                        bookStorage.Search();
+                        bookStorage.SearchBooks();
                         break;
 
                     case ExitCommand:
@@ -80,7 +80,7 @@ namespace OOP
     {
         private List<Book> _books = new List<Book>();
 
-        public void Add()
+        public void AddBooks()
         {
             Console.WriteLine("Введите название книги : ");
             string tittle = Console.ReadLine();
@@ -104,7 +104,7 @@ namespace OOP
             }
         }
 
-        public void Delete()
+        public void DeleteBooks()
         {
             if (_books.Count != 0)
             {
@@ -134,7 +134,7 @@ namespace OOP
                             switch (userInput)
                             {
                                 case PositiveAnswer:
-                                    DeleteBook(i, ref isWork);
+                                    DeleteBooks(i, ref isWork);
                                     break;
 
                                 case NegativeAnswer:
@@ -159,14 +159,7 @@ namespace OOP
             }
         }
 
-        private void DeleteBook(int key, ref bool isWork)
-        {
-            _books.RemoveAt(key);
-            isWork = false;
-            Console.WriteLine("Книга удалена !");
-        }
-
-        public void ShowAllBook()
+        public void ShowAllBooks()
         {
             if (_books.Count > 0)
             {
@@ -181,7 +174,7 @@ namespace OOP
             }
         }
 
-        public void Search()
+        public void SearchBooks()
         {
             const string SearchTitleCommand = "1";
             const string SearchAuthorCommand = "2";
@@ -202,15 +195,15 @@ namespace OOP
                     switch (Console.ReadLine())
                     {
                         case SearchTitleCommand:
-                            SearchTitle();
+                            ShowBooksByTitle();
                             break;
 
                             case SearchAuthorCommand:
-                            SearchAuthor();
+                            ShowBooksByAuthor();
                             break;
 
                         case SearchYearReleaseCommand:
-                            SearchYearRelease();
+                            ShowBooksByYearsRelese();
                             break;
 
                         case ExitCommand:
@@ -229,7 +222,14 @@ namespace OOP
             }
         }
 
-        private void SearchTitle()
+        private void DeleteBooks(int key, ref bool isWork)
+        {
+            _books.RemoveAt(key);
+            isWork = false;
+            Console.WriteLine("Книга удалена !");
+        }
+
+        private void ShowBooksByTitle()
         {
             bool isFound = false;
 
@@ -255,7 +255,7 @@ namespace OOP
             }
         }
 
-        private void SearchAuthor()
+        private void ShowBooksByAuthor()
         {
             bool isFound = false;
             Console.WriteLine("\nВведите автора\n");
@@ -280,7 +280,7 @@ namespace OOP
             }
         }
 
-        private void SearchYearRelease()
+        private void ShowBooksByYearsRelese()
         {
             bool isFound = false;
             Console.WriteLine("\nВведите год релиза\n");
