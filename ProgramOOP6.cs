@@ -74,7 +74,7 @@ namespace OOP
             {
                 Console.WriteLine("Вы ввели некорректное значение !");
             }
-            else if (_seller.GetProduct(indexProduct, out Product product))
+            else if (_seller.TryGetProduct(indexProduct, out Product product))
             {
                 if (_buyer.Money >= product.Cost)
                 {
@@ -91,9 +91,10 @@ namespace OOP
 
     class Human
     {
-        protected List<Product> Products;
         public int Money { get; protected set; }
 
+        protected List<Product> Products;
+  
         public Human(int money)
         {
             Money = money;
@@ -122,7 +123,7 @@ namespace OOP
             Products.Add(new Product("Кефир", 4));
         }
 
-        public bool GetProduct(int indexProduct, out Product product)
+        public bool TryGetProduct(int indexProduct, out Product product)
         {
             if (indexProduct < 1 || indexProduct > Products.Count)
             {
@@ -146,7 +147,7 @@ namespace OOP
 
     class Buyer : Human
     {
-        public Buyer (int money) : base(money)
+        public Buyer(int money) : base(money)
         {
             Products = new List<Product>();
         }
