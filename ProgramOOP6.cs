@@ -17,16 +17,16 @@ namespace OOP
 
     class Shop
     {
-        private const string SeePlayerInventoryCommand = "1";
-        private const string SeeProductCommand = "2";
-        private const string BuyProductCommand = "3";
-        private const string ExitCommand = "4";
-
         private Seller _seller = new Seller(0);
         private Buyer _buyer = new Buyer(20);
 
         public void Work()
         {
+            const string SeePlayerInventoryCommand = "1";
+            const string SeeProductCommand = "2";
+            const string BuyProductCommand = "3";
+            const string ExitCommand = "4";
+
             bool isWork = true;
 
             while (isWork)
@@ -56,6 +56,10 @@ namespace OOP
                     case ExitCommand:
                         isWork = false;
                         break;
+
+                    default:
+                        Console.WriteLine("Ошибка ввода команды!!!");
+                        break;
                 }
 
                 Console.ReadKey();
@@ -63,7 +67,7 @@ namespace OOP
             }
         }
 
-        public void Trade()
+        private void Trade()
         {
             _seller.ShowProducts();
 
@@ -79,7 +83,7 @@ namespace OOP
                 if (_buyer.Money >= product.Cost)
                 {
                     _buyer.BuyProduct(product);
-                    _seller.SellProduct(indexProduct - 1);
+                    _seller.SellProduct(product);
                 }
                 else
                 {
@@ -91,14 +95,14 @@ namespace OOP
 
     class Human
     {
-        public int Money { get; protected set; }
-
         protected List<Product> Products;
-  
+
         public Human(int money)
         {
             Money = money;
         }
+
+        public int Money { get; protected set; }
 
         public void ShowProducts()
         {
@@ -138,10 +142,10 @@ namespace OOP
             }
         }
 
-        public void SellProduct(int indexProduct)
+        public void SellProduct(Product product)
         {
-            Money += Products[indexProduct].Cost;
-            Products.RemoveAt(indexProduct);
+            Money += product.Cost;
+            Products.Remove(product);
         }
     }
 
@@ -161,13 +165,13 @@ namespace OOP
 
     class Product
     {
-        public string Name { get; private set; }
-        public int Cost { get; private set; }
-
         public Product(string name, int cost)
         {
             Name = name;
             Cost = cost;
         }
+
+        public string Name { get; private set; }
+        public int Cost { get; private set; }
     }
 }
