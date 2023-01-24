@@ -17,9 +17,9 @@ namespace OOP
 
     class Dispacher
     {
-        private List<Wagon> _wagons = new List<Wagon>();
         private List<Train> _trains = new List<Train>();
-        public int TicketsCount { get; private set; }
+        
+        int ticketsCount;
 
         public void Work()
         {
@@ -57,10 +57,10 @@ namespace OOP
 
             SellTickets();
 
-            _trains.Add(new Train(inputBoardingPoint, inputDropOffPoint, TicketsCount));
+            _trains.Add(new Train(inputBoardingPoint, inputDropOffPoint, ticketsCount));
             int countFreePlaceTrain = 0;
 
-            while (countFreePlaceTrain < TicketsCount)
+            while (countFreePlaceTrain < ticketsCount)
             {
                 _trains[0].CreateWagons(ref countFreePlaceTrain);
             }
@@ -78,32 +78,33 @@ namespace OOP
             }
         }
 
-        private void SellTickets()
+        private int SellTickets()
         {
             Random random = new Random();
 
-            int minPassengerCount = 20;
+            int minPassengerCount = 10;
             int maxPassengerCount = 58;
 
-            TicketsCount = random.Next(minPassengerCount, maxPassengerCount);
+            ticketsCount = random.Next(minPassengerCount, maxPassengerCount);
 
-            Console.WriteLine($"Продано {TicketsCount} билетов ");
+            Console.WriteLine($"Продано {ticketsCount} билетов ");
+            return ticketsCount;
         }
     }
 
     class Train
     {
         private List<Wagon> _wagons = new List<Wagon>();
-        public int WagonsCount { get; private set; }
-        public int PassengerCount { get; private set; }
-        public string Route { get; private set; }
-
         public Train(string boardingPoint, string dropOffPoint, int passengerCount)
         {
             PassengerCount = passengerCount;
             Route = boardingPoint + " - " + dropOffPoint;
             WagonsCount = _wagons.Count;
         }
+
+        public int WagonsCount { get; private set; }
+        public int PassengerCount { get; private set; }
+        public string Route { get; private set; }
 
         public void CreateWagons(ref int countFreePlaceTrain)
         {
@@ -112,7 +113,7 @@ namespace OOP
             for (int i = _wagons.Count - 1; i < _wagons.Count; i++)
             {
                 countFreePlaceTrain += _wagons[i].CountFreePlace;
-                Console.WriteLine($"Вместимость {i + 1 } вагона - {_wagons[i].CountFreePlace} мест");
+                Console.WriteLine($"Вместимость {i + 1} вагона - {_wagons[i].CountFreePlace} мест");
                 WagonsCount = _wagons.Count;
             }
         }
@@ -125,8 +126,6 @@ namespace OOP
 
     class Wagon
     {
-        public int CountFreePlace { get; private set; }
-
         public Wagon()
         {
             Random random = new Random();
@@ -134,5 +133,7 @@ namespace OOP
             int maxCountFreePlace = 20;
             CountFreePlace = random.Next(minCountFreePlace, maxCountFreePlace);
         }
+
+        public int CountFreePlace { get; private set; }
     }
 }
