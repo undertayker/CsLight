@@ -17,96 +17,104 @@ namespace OOP
 
     class Arena
     {
+        private List<Fighter> _fighters = new List<Fighter>();
         private Fighter _firstFighter;
         private Fighter _secondFighter;
-        private List<Fighter> _fighters = new List<Fighter>();
 
         public Arena()
         {
-            _fighters.Add(new Knight(" Рыцарь", 100, 55, 45));
-            _fighters.Add(new Barbarion(" Варвар", 100, 60, 20));
-            _fighters.Add(new Paladin(" Паладин", 100, 50, 50));
-            _fighters.Add(new Asassin(" Асасин", 100, 70, 10));
-            _fighters.Add(new Archer(" Лучник", 100, 55, 15));
+            _fighters.Add(new Knight("Рыцарь", 100, 45, 40));
+            _fighters.Add(new Barbarion("Варвар", 100, 50, 30));
+            _fighters.Add(new Paladin("Паладин", 100, 40, 40));
+            _fighters.Add(new Archer("Лучник", 100, 30, 35));
+            _fighters.Add(new Asassin("Асассин", 100, 35, 30));
         }
+
 
         public void StartBattle()
         {
-            _firstFighter = ChooseFighter();
-            _secondFighter = ChooseFighter();
+            ShowFighters();
+
+            _firstFighter = GetChoosenFighter("Выберите первого бойца : ");
+            Console.Clear();
+            ShowFighters();
+            Console.WriteLine($"{_firstFighter.Name}  выбран !");
+            _secondFighter = GetChoosenFighter("Выберите второго бойца : ");
+            Console.Clear();
+            ShowFighters();
+            Console.WriteLine($"{_secondFighter.Name} выбран !");
+           
 
             while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
-                _firstFighter.ShowStats();
-                _secondFighter.ShowStats();
-                _firstFighter.TakeDamage(_secondFighter.Damage);
-                _secondFighter.TakeDamage(_firstFighter.Damage);
-                _firstFighter.UseSpecialAttack();
-                _secondFighter.UseSpecialAttack();
-
-                ShowBattleResult();
-
                 Console.ReadKey();
                 Console.Clear();
+                _firstFighter.ShowInfo();
+                _secondFighter.ShowInfo();
+                _firstFighter.TakeDamage(_secondFighter.Damage);
+                _secondFighter.TakeDamage(_firstFighter.Damage);
+                _firstFighter.UseSpecialAttack(_secondFighter);
+                _secondFighter.UseSpecialAttack(_firstFighter);
+                ShowResultBattle();
             }
         }
 
-        public void ShowBattleResult()
+        private Fighter GetChoosenFighter(string text)
         {
-            if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
-            {
-                Console.WriteLine("Ничья!! Погибли оба бойца!!");
-            }
-            else if (_firstFighter.Health <= 0)
-            {
-                Console.WriteLine($"{_secondFighter.Name} Победил!!!");
-            }
-            else if (_secondFighter.Health <= 0)
-            {
-                Console.WriteLine($"{_firstFighter.Name} Победил!!!");
-            }
-        }
-
-        private Fighter ChooseFighter()
-        {
-            Fighter fighter = null;
-            int number;
-            ShowFighters();
-
-            Console.Write("Введите номер бойца: ");
-            string fighterNimber = Console.ReadLine();
- 
-            if (int.TryParse(fighterNimber, out number))
-            {
-                number--;
-
-                if (number >= 0 && number < _fighters.Count)
-                {
-                    fighter = _fighters[number];
-                    _fighters.Remove(fighter);
-                }
-                else
-                {
-                    Console.WriteLine("Такого бойца нет!");
-                }
-            }
-
+            Console.Write(text);
+            int index = GetCorrectNumber(1, _fighters.Count) - 1 ;
+            Fighter fighter = _fighters[index];
+            _fighters.Remove(fighter);
             return fighter;
         }
 
-        private void ShowFighters()
+        public int GetCorrectNumber(int minValue, int maxValue)
         {
-            Console.WriteLine("Добро пожаловать на Арену!!\nВыберите 2 бойцов из списка :");
+            bool isParsing = true;
+            int number = 0;
 
+            while (isParsing)
+            {
+                string userInput = Console.ReadLine();
+
+                isParsing = int.TryParse(userInput, out number);
+
+                if (number >= minValue && number <= maxValue)
+                {
+                    isParsing = false;
+                }
+            }
+
+            Console.WriteLine(number);
+            return number;
+        }
+
+        public void ShowResultBattle()
+        {
+            if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
+            {
+                Console.WriteLine("Ничья! Погибли оба бойца!");
+            }
+            else if (_firstFighter.Health < 0)
+            {
+                Console.WriteLine($"{_secondFighter.Name} Победил в битве!!");
+            }
+            else if (_secondFighter.Health < 0)
+            {
+                Console.WriteLine($"{_secondFighter.Name} Победил в битве!!");
+            }
+        }
+        public void ShowFighters()
+        {
             for (int i = 0; i < _fighters.Count; i++)
             {
                 Console.Write(i + 1);
-                _fighters[i].ShowStats();
+                _fighters[i].ShowInfo();
             }
         }
     }
 
-    class Fighter
+    abstract class Fighter
     {
         public Fighter(string name, int health, int damage, int armor)
         {
@@ -116,75 +124,93 @@ namespace OOP
             Armor = armor;
         }
 
-        public string Name { get; protected set; }
+        public string Name { get; }
         public int Health { get; protected set; }
         public int Damage { get; protected set; }
         public int Armor { get; protected set; }
 
-        public void ShowStats()
+        public void ShowInfo()
         {
-            Console.WriteLine($"Класс - {Name}," +
-                              $" Здоровье - {Health}," +
-                              $" Наносимый урон - {Damage}," +
-                              $" Броня - {Armor}");
+            Console.WriteLine($" Класс : {Name}, Жизни : {Health}, Урон : {Damage}, Броня : {Armor}");
         }
 
+        public void AddHealth(int health)
+        {
+            if (health > 0)
+            {
+                Health += health;
+            }
+        }
         public void TakeDamage(int damage)
         {
             Health -= damage - Armor;
         }
 
-        public void UseSpecialAttack()
+        public void UseSpecialAttack(Fighter fighter)
         {
             Random random = new Random();
-            int rangeMaxNumbers = 100;
-            int chanceUsingAbility = random.Next(rangeMaxNumbers);
-            int chanceAbility = 20;
+            int _chance = 33;
+            int _maxChance = 100;
 
-            if (chanceUsingAbility < chanceAbility)
+            bool isSuccess = random.Next(_maxChance) < _chance;
+
+            if (isSuccess)
             {
-                UsePower();
+                UseSkill();
             }
         }
 
-        protected virtual void UsePower() { }
+        protected virtual void UseSkill() { }
     }
 
     class Knight : Fighter
     {
-        private int _graceOfTheGoddess = 25;
+        private int _graceOfTheGoods = 25;
         public Knight(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UsePower()
+        protected override void UseSkill()
         {
-            Console.WriteLine($"{Name} Использовал милость богини. Броня и Жизни увеличены!!");
-            Armor += _graceOfTheGoddess;
-            Health += _graceOfTheGoddess;
+            Console.WriteLine($"{Name} Использовал милость богини. Жизни и Броня увеличилсь !");
+            Health += _graceOfTheGoods;
+            Armor += _graceOfTheGoods;
         }
     }
 
     class Barbarion : Fighter
     {
         private int _furiousRoar = 20;
+
         public Barbarion(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UsePower()
+        protected override void UseSkill()
         {
-            Console.WriteLine($"{Name} Использовал заклинание Яростный рев. Урон и Жизни увеличены!!");
-            Health += _furiousRoar;
+            Console.WriteLine($"{Name} Использовал Яростный рев. Урон увеличен");
             Damage += _furiousRoar;
         }
     }
 
     class Paladin : Fighter
     {
-        private int _divineHealing = 50;
+        private int _divineHealth = 50;
         public Paladin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UsePower()
+        protected override void UseSkill()
         {
-            Console.WriteLine($"{Name} Использует заклинание Божественное исцеление. Восстановление 50% жизней");
-            Health += _divineHealing;
+            Console.WriteLine($"{Name} Использует Божественное исцеление. Восстановление здоровья на 50%");
+            AddHealth(_divineHealth);
+        }
+    }
+
+    class Archer : Fighter
+    {
+        private int _damageBuff = 40;
+
+        public Archer(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        protected override void UseSkill()
+        {
+            Console.WriteLine($"{Name} Использовал Песнь духов. Урон увеличен ! ");
+            Damage += _damageBuff;
         }
     }
 
@@ -193,22 +219,10 @@ namespace OOP
         private int _doubleDamage = 2;
         public Asassin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UsePower()
+        protected override void UseSkill()
         {
-            Console.WriteLine($"{Name} Призывает из тени двойника. Получение в 2 раза больше урона !!");
+            Console.WriteLine($"{Name} Призывает из тени двойника. Бьет в 2 раза сильней !");
             Damage *= _doubleDamage;
-        }
-    }
-
-    class Archer : Fighter
-    {
-        private int _damageBuff = 50;
-        public Archer(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
-
-        protected override void UsePower()
-        {
-            Console.WriteLine($"{Name} использовал заклинание Песнь Духов. Урон увеличен!! ");
-            Damage += _damageBuff;
         }
     }
 }
