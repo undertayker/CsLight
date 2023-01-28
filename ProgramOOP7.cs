@@ -32,7 +32,7 @@ namespace OOP
                 Train train = CreateTrain();
                 _trains.Add(train);
 
-                SendTrain(_trains[_trains.Count - 1]);
+                Send(_trains[_trains.Count - 1]);
 
                 Console.WriteLine();
                 ShowTrains();
@@ -68,7 +68,7 @@ namespace OOP
             return train;
         }
 
-        private void SendTrain(Train train)
+        private void Send(Train train)
         {
             Console.WriteLine("Нажмите любую клавишу для отправки поезда !");
             Console.ReadKey();
@@ -105,13 +105,13 @@ namespace OOP
         public int WagonsCount { get; private set; }
         public int PassangerCount { get; private set; }
         public string Route { get; private set; }
-        public bool Send { get; private set; }
+        public bool isSend { get; private set; }
 
         public void CreateWagons()
         {
             _wagons.Add(new Wagon());
 
-            for (int i = _wagons.Count -1; i < _wagons.Count; i++)
+            for (int i = _wagons.Count - 1; i < _wagons.Count; i++)
             {
                 FreePlaces += _wagons[i].CountFreePlace;
                 Console.WriteLine($"Вместимость {i + 1} вагона -  {_wagons[i].CountFreePlace}");
@@ -126,22 +126,21 @@ namespace OOP
 
         public void SetSend()
         {
-            Send = true;
+            isSend = true;
         }
     }
 
     class Wagon
     {
-        private static Random random = new Random();
+        private static Random _random = new Random();
 
         public Wagon()
         {
             int minCountFreePlace = 10;
             int maxCountFreePlace = 20;
-            CountFreePlace = random.Next(minCountFreePlace, maxCountFreePlace);
+            CountFreePlace = _random.Next(minCountFreePlace, maxCountFreePlace);
         }
 
         public int CountFreePlace { get; private set; }
     }
 }
-
