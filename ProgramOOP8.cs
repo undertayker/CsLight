@@ -34,11 +34,11 @@ namespace OOP
         {
             ShowFighters();
 
-            _firstFighter = GetChoosenFighter("Выберите первого бойца : ");
+            _firstFighter = ChooseFighter("Выберите первого бойца : ");
             Console.Clear();
             ShowFighters();
             Console.WriteLine($"{_firstFighter.Name}  выбран !");
-            _secondFighter = GetChoosenFighter("Выберите второго бойца : ");
+            _secondFighter = ChooseFighter("Выберите второго бойца : ");
             Console.Clear();
             ShowFighters();
             Console.WriteLine($"{_secondFighter.Name} выбран !");
@@ -49,21 +49,14 @@ namespace OOP
                 Console.Clear();
                 _firstFighter.ShowInfo();
                 _secondFighter.ShowInfo();
-                _firstFighter.TakeDamage(_secondFighter.Damage);
-                _secondFighter.TakeDamage(_firstFighter.Damage);
-                _firstFighter.UseSpecialAttack(_secondFighter);
+                _firstFighter.Attack(_secondFighter);
+                _secondFighter.Attack(_firstFighter);
+                //_firstFighter.TakeDamage(_secondFighter.Damage);
+                //_secondFighter.TakeDamage(_firstFighter.Damage);
+                _firstFighter.UseSpecialAttack( _secondFighter);
                 _secondFighter.UseSpecialAttack(_firstFighter);
                 ShowResultBattle();
             }
-        }
-
-        private Fighter GetChoosenFighter(string text)
-        {
-            Console.Write(text);
-            int index = GetCorrectNumber(1, _fighters.Count) - 1;
-            Fighter fighter = _fighters[index];
-            _fighters.Remove(fighter);
-            return fighter;
         }
 
         public int GetCorrectNumber(int minValue, int maxValue)
@@ -116,10 +109,21 @@ namespace OOP
                 _fighters[i].ShowInfo();
             }
         }
+
+        private Fighter ChooseFighter(string text)
+        {
+            Console.Write(text);
+            int index = GetCorrectNumber(1, _fighters.Count) - 1;
+            Fighter fighter = _fighters[index];
+            _fighters.Remove(fighter);
+            return fighter;
+        }
     }
 
     abstract class Fighter
     {
+        private int _chance = 33;
+        private int _maxChance = 100;
         public Fighter(string name, int health, int damage, int armor)
         {
             Name = name;
@@ -140,15 +144,25 @@ namespace OOP
 
         public void TakeDamage(float damage)
         {
-            float DamageReduction = 30;
-            float healthLost = damage * ((100 - DamageReduction) / 100);
+            float damageReduction = 30;
+            float healthLost = damage * ((100 - damageReduction) / 100);
             Health -= healthLost;
             Console.WriteLine(Name + " Теряет " + healthLost + " ХП");
         }
 
+        public void Attack(Fighter fighter)
+        {
+            Random random = new Random();
+            
+        }
+
         public void UseSpecialAttack(Fighter fighter)
         {
-            if (Health < 200)
+           
+
+            int minValue = 200;
+
+            if (Health < minValue)
             {
                 UseSkill();
                 return;
@@ -160,15 +174,15 @@ namespace OOP
 
     class Knight : Fighter
     {
-        private int _graceOfTheGoods = 70;
+        private int _graceOfGods = 70;
 
         public Knight(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
         protected override void UseSkill()
         {
             Console.WriteLine($"{Name} Использовал милость богини. Жизни и Броня увеличилсь !");
-            Health += _graceOfTheGoods;
-            Armor += _graceOfTheGoods;
+            Health += _graceOfGods;
+            Armor += _graceOfGods;
         }
     }
 
@@ -213,14 +227,14 @@ namespace OOP
 
     class Asassin : Fighter
     {
-        private int _doubleDamage = 2;
+        private int _damageMultiplier  = 2;
 
         public Asassin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
         protected override void UseSkill()
         {
-            Console.WriteLine($"{Name} Призывает из тени двойника. Бьет в 2 раза сильней !");
-            Damage *= _doubleDamage;
+            Console.WriteLine($"{Name} Призывает из тени двойника. Бьет в {_damageMultiplier} раза сильней !");
+            Damage *= _damageMultiplier ;
         }
     }
 }
