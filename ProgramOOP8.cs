@@ -23,11 +23,11 @@ namespace OOP
 
         public Arena()
         {
-            _fighters.Add(new Knight("Рыцарь", 1000, 90, 80));
+            _fighters.Add(new Knight("Рыцарь", 1000, 75, 80));
             _fighters.Add(new Barbarion("Варвар", 1000, 100, 60));
-            _fighters.Add(new Paladin("Паладин", 1000, 80, 80));
+            _fighters.Add(new Paladin("Паладин", 1000, 70, 80));
             _fighters.Add(new Archer("Лучник", 1000, 60, 70));
-            _fighters.Add(new Asassin("Асассин", 1000, 70, 65));
+            _fighters.Add(new Asassin("Асассин", 1000, 90, 65));
         }
 
         public void StartBattle()
@@ -51,12 +51,8 @@ namespace OOP
                 _secondFighter.ShowInfo();
                 _firstFighter.Attack(_secondFighter);
                 _secondFighter.Attack(_firstFighter);
-                //_firstFighter.TakeDamage(_secondFighter.Damage);
-                //_secondFighter.TakeDamage(_firstFighter.Damage);
-                _firstFighter.UseSpecialAttack( _secondFighter);
-                _secondFighter.UseSpecialAttack(_firstFighter);
                 ShowResultBattle();
-            }
+            }          
         }
 
         public int GetCorrectNumber(int minValue, int maxValue)
@@ -100,7 +96,7 @@ namespace OOP
                 Console.WriteLine($"{_secondFighter.Name} Победил в битве!!");
             }
         }
-
+          
         public void ShowFighters()
         {
             for (int i = 0; i < _fighters.Count; i++)
@@ -122,67 +118,74 @@ namespace OOP
 
     abstract class Fighter
     {
-        private int _chance = 33;
-        private int _maxChance = 100;
-        public Fighter(string name, int health, int damage, int armor)
+        private static Random random = new Random();
+
+        int _defoultDamage;
+        
+        public Fighter(string name, int health, int defoultDamage, int armor)
         {
             Name = name;
             Health = health;
-            Damage = damage;
+            _defoultDamage = defoultDamage;
             Armor = armor;
+            CurrentDamage = _defoultDamage;
         }
 
         public string Name { get; protected set; }
         public float Health { get; protected set; }
-        public float Damage { get; protected set; }
+        public float CurrentDamage { get; protected set; }
         public float Armor { get; protected set; }
 
         public void ShowInfo()
         {
-            Console.WriteLine($" Класс : {Name}, Жизни : {Health}, Урон : {Damage}, Броня : {Armor}");
+            Console.WriteLine($" Класс : {Name}, Жизни : {Health}, Урон : {CurrentDamage}, Броня : {Armor}");
         }
 
         public void TakeDamage(float damage)
         {
+            int maxValue = 100;
             float damageReduction = 30;
-            float healthLost = damage * ((100 - damageReduction) / 100);
+            float healthLost = damage * ((maxValue - damageReduction) / maxValue);
             Health -= healthLost;
             Console.WriteLine(Name + " Теряет " + healthLost + " ХП");
         }
 
         public void Attack(Fighter fighter)
-        {
-            Random random = new Random();
-            
-        }
+        {           
+            int specialSkillChance = 34;
+            int maxSkillChance = 100;
+            int chance = random.Next(maxSkillChance);
 
-        public void UseSpecialAttack(Fighter fighter)
-        {
-           
-
-            int minValue = 200;
-
-            if (Health < minValue)
+            if (chance <= specialSkillChance)
             {
-                UseSkill();
-                return;
+                UseSpecialAttack();
             }
+
+            fighter.TakeDamage(CurrentDamage);
+
+            CurrentDamage = _defoultDamage;
         }
 
-        protected virtual void UseSkill() { }
+        protected virtual void UseSpecialAttack() { }
     }
 
     class Knight : Fighter
     {
+        private int _maxArmor = 150;
         private int _graceOfGods = 70;
 
         public Knight(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UseSkill()
+        protected override void UseSpecialAttack()
         {
             Console.WriteLine($"{Name} Использовал милость богини. Жизни и Броня увеличилсь !");
             Health += _graceOfGods;
             Armor += _graceOfGods;
+
+            if (Armor > _maxArmor)
+            {
+                Armor = _maxArmor;
+            }
         }
     }
 
@@ -192,10 +195,10 @@ namespace OOP
 
         public Barbarion(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UseSkill()
+        protected override void UseSpecialAttack()
         {
             Console.WriteLine($"{Name} Использовал Яростный рев. Урон увеличен");
-            Damage += _furiousRoar;
+            CurrentDamage += _furiousRoar;
         }
     }
 
@@ -205,7 +208,7 @@ namespace OOP
 
         public Paladin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UseSkill()
+        protected override void UseSpecialAttack()
         {
             Console.WriteLine($"{Name} Использует Божественное исцеление. Восстановление здоровья");
             Health += _divineHealth;
@@ -218,10 +221,10 @@ namespace OOP
 
         public Archer(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UseSkill()
+        protected override void UseSpecialAttack()
         {
             Console.WriteLine($"{Name} Использовал Песнь духов. Урон увеличен ! ");
-            Damage += _damageBuff;
+            CurrentDamage += _damageBuff;
         }
     }
 
@@ -231,10 +234,11 @@ namespace OOP
 
         public Asassin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
 
-        protected override void UseSkill()
+        protected override void UseSpecialAttack()
         {
             Console.WriteLine($"{Name} Призывает из тени двойника. Бьет в {_damageMultiplier} раза сильней !");
-            Damage *= _damageMultiplier ;
+            
+            CurrentDamage *= _damageMultiplier ;
         }
     }
 }
