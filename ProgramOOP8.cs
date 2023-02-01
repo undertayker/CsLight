@@ -10,137 +10,235 @@ namespace OOP
     {
         static void Main(string[] args)
         {
-            Dispacher dispacher = new Dispacher();
-            dispacher.Work();
+            Arena arena = new Arena();
+            arena.StartBattle();
         }
     }
 
-    class Dispacher
+    class Arena
     {
-        private readonly List<Train> _trains = new List<Train>();
-        private static readonly Random _random = new Random();
+        private List<Fighter> _fighters = new List<Fighter>();
+        private Fighter _firstFighter;
+        private Fighter _secondFighter;
 
-        public void Work()
+        public Arena()
         {
-            bool isWorking = true;
+            _fighters.Add(new Knight("Рыцарь", 1000, 75, 80));
+            _fighters.Add(new Barbarion("Варвар", 1000, 100, 60));
+            _fighters.Add(new Paladin("Паладин", 1000, 70, 80));
+            _fighters.Add(new Archer("Лучник", 1000, 60, 70));
+            _fighters.Add(new Asassin("Асассин", 1000, 90, 65));
+        }
 
-            while (isWorking)
+        public void StartBattle()
+        {
+            ShowFighters();
+
+            _firstFighter = ChooseFighter("Выберите первого бойца : ");
+            Console.Clear();
+            ShowFighters();
+            Console.WriteLine($"{_firstFighter.Name}  выбран !");
+            _secondFighter = ChooseFighter("Выберите второго бойца : ");
+            Console.Clear();
+            ShowFighters();
+            Console.WriteLine($"{_secondFighter.Name} выбран !");
+
+            while (_firstFighter.Health > 0 && _secondFighter.Health > 0)
             {
-                Console.WriteLine("На станции нет поездов !!!");
-                Console.WriteLine("Создание поезда ");
-
-                Train train = CreateTrain();
-                _trains.Add(train);
-
-                Send(_trains[_trains.Count - 1]);
-
-                Console.WriteLine();
-                ShowTrains();
-                Console.WriteLine();
+                Console.ReadKey();
+                Console.Clear();
+                _firstFighter.ShowInfo();
+                _secondFighter.ShowInfo();
+                _firstFighter.Attack(_secondFighter);
+                _secondFighter.Attack(_firstFighter);
+                ShowResultBattle();
             }
         }
 
-        private void ShowTrains()
+        public int GetCorrectNumber(int minValue, int maxValue)
         {
-            foreach (var train in _trains)
+            bool isParsing = true;
+            int number = 0;
+
+            while (isParsing)
             {
-                Console.WriteLine("Отправлен поезд : " + train.Route);
+                string userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out number))
+                {
+                    if (number >= minValue && number <= maxValue)
+                    {
+                        isParsing = false;
+                    }
+                }
+
+                if (isParsing)
+                {
+                    Console.WriteLine($"Неверный ввод. Должно быть от {minValue} до {maxValue}");
+                }
+            }
+
+            return number;
+        }
+
+        public void ShowResultBattle()
+        {
+            if (_firstFighter.Health <= 0 && _secondFighter.Health <= 0)
+            {
+                Console.WriteLine("Ничья! Погибли оба бойца!");
+            }
+            else if (_firstFighter.Health < 0)
+            {
+                Console.WriteLine($"{_secondFighter.Name} Победил в битве!!");
+            }
+            else if (_secondFighter.Health < 0)
+            {
+                Console.WriteLine($"{_secondFighter.Name} Победил в битве!!");
             }
         }
 
-        private Train CreateTrain()
+        public void ShowFighters()
         {
-            Console.WriteLine("Введите станцию отправления поезда : ");
-            string inputBoardingPoint = Console.ReadLine();
-
-            Console.WriteLine("Введите станцию прибытия поезда : ");
-            string inputDropOffPoint = Console.ReadLine();
-
-            int tickets = SellTickets();
-
-            var train = new Train(inputBoardingPoint, inputDropOffPoint, tickets);
-
-            while (train.FreePlaces < tickets)
+            for (int i = 0; i < _fighters.Count; i++)
             {
-                train.CreateWagons();
+                Console.Write(i + 1);
+                _fighters[i].ShowInfo();
             }
-
-            return train;
         }
 
-        private void Send(Train train)
+        private Fighter ChooseFighter(string text)
         {
-            Console.WriteLine("Нажмите любую клавишу для отправки поезда !");
-            Console.ReadKey();
-
-            Console.WriteLine($"Поезд {train.Route} отправлен !!");
-            train.Sending();
-        }
-
-        private int SellTickets()
-        {
-            int minPassangerCount = 10;
-            int maxPassangerCount = 58;
-
-            int tickets = _random.Next(minPassangerCount, maxPassangerCount);
-
-            Console.WriteLine($"Продано {tickets} билетов ");
-
-            return tickets;
+            Console.Write(text);
+            int index = GetCorrectNumber(1, _fighters.Count) - 1;
+            Fighter fighter = _fighters[index];
+            _fighters.Remove(fighter);
+            return fighter;
         }
     }
 
-    class Train
+    abstract class Fighter
     {
-        private List<Wagon> _wagons = new List<Wagon>();
+        private static Random random = new Random();
 
-        public Train(string boardingPoint, string dropOffPoint, int passengerCount)
+        int _defoultDamage;
+
+        public Fighter(string name, int health, int defoultDamage, int armor)
         {
-            PassangerCount = passengerCount;
-            Route = boardingPoint + " - " + dropOffPoint;
-            WagonsCount = _wagons.Count;
+            Name = name;
+            Health = health;
+            _defoultDamage = defoultDamage;
+            Armor = armor;
+            CurrentDamage = _defoultDamage;
         }
 
-        public int FreePlaces { get; private set; }
-        public int WagonsCount { get; private set; }
-        public int PassangerCount { get; private set; }
-        public string Route { get; private set; }
-        public bool IsSend { get; private set; }
+        public string Name { get; protected set; }
+        public float Health { get; protected set; }
+        public float CurrentDamage { get; protected set; }
+        public float Armor { get; protected set; }
 
-        public void CreateWagons()
+        public void ShowInfo()
         {
-            _wagons.Add(new Wagon());
+            Console.WriteLine($" Класс : {Name}, Жизни : {Health}, Урон : {CurrentDamage}, Броня : {Armor}");
+        }
 
-            for (int i = _wagons.Count - 1; i < _wagons.Count; i++)
+        public void TakeDamage(float damage)
+        {
+            int maxValue = 100;
+            float damageReduction = 30;
+            float healthLost = damage * ((maxValue - damageReduction) / maxValue);
+            Health -= healthLost;
+            Console.WriteLine(Name + " Теряет " + healthLost + " ХП");
+        }
+
+        public void Attack(Fighter fighter)
+        {
+            int specialSkillChance = 34;
+            int maxSkillChance = 100;
+            int chance = random.Next(maxSkillChance);
+
+            if (chance <= specialSkillChance)
             {
-                FreePlaces += _wagons[i].CountFreePlace;
-                Console.WriteLine($"Вместимость {i + 1} вагона -  {_wagons[i].CountFreePlace}");
-                WagonsCount = _wagons.Count;
+                UseSpecialAttack();
             }
+
+            fighter.TakeDamage(CurrentDamage);
+
+            CurrentDamage = _defoultDamage;
         }
 
-        public void Sending()
-        {
-            IsSend = true;
-        }
+        protected virtual void UseSpecialAttack() { }
+    }
 
-        private void ShowInfo()
+    class Knight : Fighter
+    {
+        private int _maxArmor = 150;
+        private int _graceOfGods = 70;
+
+        public Knight(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        protected override void UseSpecialAttack()
         {
-            Console.WriteLine($"Рейс :{Route}\nПассажиров :{PassangerCount}\nВыделено ваговов :{WagonsCount}");
+            Console.WriteLine($"{Name} Использовал милость богини. Жизни и Броня увеличилсь !");
+            Health += _graceOfGods;
+            Armor += _graceOfGods;
+
+            if (Armor > _maxArmor)
+            {
+                Armor = _maxArmor;
+            }
         }
     }
 
-    class Wagon
+    class Barbarion : Fighter
     {
-        private static Random _random = new Random();
+        private int _furiousRoar = 40;
 
-        public Wagon()
+        public Barbarion(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        protected override void UseSpecialAttack()
         {
-            int minCountFreePlace = 10;
-            int maxCountFreePlace = 20;
-            CountFreePlace = _random.Next(minCountFreePlace, maxCountFreePlace);
+            Console.WriteLine($"{Name} Использовал Яростный рев. Урон увеличен");
+            CurrentDamage += _furiousRoar;
         }
+    }
 
-        public int CountFreePlace { get; private set; }
+    class Paladin : Fighter
+    {
+        private int _divineHealth = 50;
+
+        public Paladin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        protected override void UseSpecialAttack()
+        {
+            Console.WriteLine($"{Name} Использует Божественное исцеление. Восстановление здоровья");
+            Health += _divineHealth;
+        }
+    }
+
+    class Archer : Fighter
+    {
+        private int _damageBuff = 70;
+
+        public Archer(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        protected override void UseSpecialAttack()
+        {
+            Console.WriteLine($"{Name} Использовал Песнь духов. Урон увеличен ! ");
+            CurrentDamage += _damageBuff;
+        }
+    }
+
+    class Asassin : Fighter
+    {
+        private int _damageMultiplier = 2;
+
+        public Asassin(string name, int health, int damage, int armor) : base(name, health, damage, armor) { }
+
+        protected override void UseSpecialAttack()
+        {
+            Console.WriteLine($"{Name} Призывает из тени двойника. Бьет в {_damageMultiplier} раза сильней !");
+
+            CurrentDamage *= _damageMultiplier;
+        }
     }
 }
