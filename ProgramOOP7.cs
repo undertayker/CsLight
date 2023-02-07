@@ -74,7 +74,7 @@ namespace OOP
             Console.ReadKey();
 
             Console.WriteLine($"Поезд {train.Route} отправлен !!");
-            train.Sending();
+            train.isSending();
         }
 
         private int SellTickets()
@@ -117,16 +117,11 @@ namespace OOP
                 Console.WriteLine($"Вместимость {i + 1} вагона -  {_wagons[i].CountFreePlace}");
                 WagonsCount = _wagons.Count;
             }
-        }  
-
-        public void Sending()
-        {
-            IsSend = true;
         }
 
-        private void ShowInfo()
+        public void isSending()
         {
-            Console.WriteLine($"Рейс :{Route}\nПассажиров :{PassangerCount}\nВыделено ваговов :{WagonsCount}");
+            IsSend = true;
         }
     }
 
