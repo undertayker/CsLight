@@ -1,0 +1,8 @@
+D:\IJunior\CSLight\T46\bin\Debug\T46.exe.config
+D:\IJunior\CSLight\T46\bin\Debug\T46.exe
+D:\IJunior\CSLight\T46\bin\Debug\T46.pdb
+D:\IJunior\CSLight\T46\obj\Debug\T46.csproj.AssemblyReference.cache
+D:\IJunior\CSLight\T46\obj\Debug\T46.csproj.SuggestedBindingRedirects.cache
+D:\IJunior\CSLight\T46\obj\Debug\T46.csproj.CoreCompileInputs.cache
+D:\IJunior\CSLight\T46\obj\Debug\T46.exe
+D:\IJunior\CSLight\T46\obj\Debug\T46.pdb
