@@ -141,7 +141,8 @@ namespace T46
         private List<Product> _productsInBasket;
         private int _money;
 
-        public Client(int money, List<Product> productsInBasket)        {
+        public Client(int money, List<Product> productsInBasket)
+        {
             _productsInBasket = productsInBasket;
             _money = money;
         }
