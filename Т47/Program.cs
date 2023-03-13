@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,6 @@ namespace Т47
     {
         private Platoon _platoonLight = new Platoon();
         private Platoon _platoonDark = new Platoon();
-        private Random _random = new Random();
         private Soldier _firstSolider;
         private Soldier _secondSolider;
 
@@ -78,7 +78,6 @@ namespace Т47
     class Platoon
     {
         private List<Soldier> _soldiers = new List<Soldier>();
-        private Soldier _soldier;
         private static Random _random = new Random();
 
         public Platoon()
@@ -198,7 +197,7 @@ namespace Т47
         protected override void UsePower()
         {
             Console.WriteLine($"{Name} Достает дефибрилятор и поражает противника эл.током !");
-            Damage *= _damageBuff;
+            Damage += _damageBuff;
         }
     }
 
