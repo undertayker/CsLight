@@ -68,6 +68,7 @@ namespace Т47
             {
                 _platoonLight.RemoveSoldierFromPlatoon(_firstSolider);
             }
+
             if (_secondSolider.Health <= 0)
             {
                 _platoonDark.RemoveSoldierFromPlatoon(_secondSolider);
