@@ -12,20 +12,20 @@ namespace CSharpLight
         {
             Zoo zoo = new Zoo();
             zoo.StartExcursion();
-            Console.ReadLine();
         }
     }
 
     class Zoo
     {
+        private const string Start = "1";
+        private const string Exit = "2";
+
         private List<Aviary> _aviaries = new List<Aviary>();
-
-        const string Start = "1";
-        const string Exit = "2";
-
+        
         public void StartExcursion()
         {
-            CreativeAviary(5);
+            CreateAviaries(1);
+
             bool isWork = true;
 
             while (isWork)
@@ -33,7 +33,7 @@ namespace CSharpLight
                 Console.WriteLine($"Добро пожаловать в зоопар. У нас есть {_aviaries.Count} вальеров с животными\n" +
                     $"Для начало экскурсии по зоопарку, введите : {Start}\n" +
                     $"Для завершения экскурсии введите : {Exit} ");
-                   
+
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -56,11 +56,15 @@ namespace CSharpLight
             }
         }
 
-        private void CreativeAviary(int numberOfAviary)
+        private void CreateAviaries(int numberOfAviary)
         {
-            for (int i = 0; i < numberOfAviary; i++)
+            for (int i = 0; i < numberOfAviary ; i++)
             {
-                _aviaries.Add(new Aviary());
+                _aviaries.Add(new Aviary(new Animal("Тигр", "Ppppp")));
+                _aviaries.Add(new Aviary(new Animal("Горный козел", "Бееее")));
+                _aviaries.Add(new Aviary(new Animal("Жираф", "Хрум хрум")));
+                _aviaries.Add(new Aviary(new Animal("Змея", "Ссссс")));
+                _aviaries.Add(new Aviary(new Animal("Крокодил", "Клац клац")));
             }
         }
 
@@ -86,64 +90,33 @@ namespace CSharpLight
     }
 
     class Aviary
-    {
-        private Dictionary<int, Animal> _animals = new Dictionary<int, Animal>();
-        static private Random _random = new Random();
-        private string[] _listAnimals = new string[] { "Tiger", "Sheep", "Giraffe", "Elephant", "Crocodile" };
+    { 
+        private List<Animal> animals = new List<Animal>();
 
-        public Aviary()
+        public Aviary(Animal animal)
         {
-            CreativeAnimal(5);
+          animals.Add(animal);
+          animals.Add(animal);
+          animals.Add(animal);
+          animals.Add(animal);
+          animals.Add(animal);
         }
 
         public void ShowAnimal()
         {
-            Console.WriteLine($"\nКоличиство животных в вольере - {_animals.Count}");
+            Console.WriteLine($"\nКоличиство животных в вольере - {animals.Count}");
 
-            foreach (var animal in _animals)
+            foreach (var animal in animals)
             {
-                Console.WriteLine($"\n{animal.Value.Name}. Пол - {animal.Value.Gender}. Звук - {animal.Value.Voice}");
+                Console.WriteLine($"\n{animal.Name}. Пол - {animal.Gender}. Звук - {animal.Voice}");
             }
-        }
-
-        private void CreativeAnimal(int numberOfAnimals)
-        {
-            int animalId = _random.Next(0, _listAnimals.Length);
-
-            for (int i = 0; i < numberOfAnimals; i++)
-            {
-                _animals.Add(i, GetAnimal(animalId));
-            }
-        }
-
-        private Animal GetAnimal(int animalId)
-        {
-            switch (_listAnimals[animalId])
-            {
-                case "Tiger":
-                    return new Animal("Тигр", "Р-р-р");
-
-                case "Sheep":
-                    return new Animal("Овца", "Беее");
-
-                case "Giraffe":
-                    return new Animal("Жираф", "Хрум-хрум");
-
-                case "Elephant":
-                    return new Animal("Бегемот", "Хрю-хрю");
-
-                case "Crocodile":
-                    return new Animal("Крокодил", "Клоц-клоц");
-            }
-
-            return null;
         }
     }
 
     class Animal
     {
-        static private Random _random = new Random();
-
+        private static Random _random = new Random();
+        
         public Animal(string name, string voice)
         {
             Name = name;
@@ -158,7 +131,7 @@ namespace CSharpLight
         private string GetGenderAnimal()
         {
             int minimumNumberGender = 0;
-            int maximumNumberGender = 3;
+            int maximumNumberGender = 2;
             int gender = _random.Next(minimumNumberGender, maximumNumberGender);
 
             if (gender == 1)
