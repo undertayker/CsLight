@@ -91,22 +91,22 @@ namespace CSharpLight
 
     class Aviary
     { 
-        private List<Animal> animals = new List<Animal>();
+        private List<Animal> _animals = new List<Animal>();
 
         public Aviary(Animal animal)
         {
-          animals.Add(animal);
-          animals.Add(animal);
-          animals.Add(animal);
-          animals.Add(animal);
-          animals.Add(animal);
+          _animals.Add(animal);
+          _animals.Add(animal);
+          _animals.Add(animal);
+          _animals.Add(animal);
+          _animals.Add(animal);
         }
 
         public void ShowAnimal()
         {
-            Console.WriteLine($"\nКоличиство животных в вольере - {animals.Count}");
+            Console.WriteLine($"\nКоличиство животных в вольере - {_animals.Count}");
 
-            foreach (var animal in animals)
+            foreach (var animal in _animals)
             {
                 Console.WriteLine($"\n{animal.Name}. Пол - {animal.Gender}. Звук - {animal.Voice}");
             }
