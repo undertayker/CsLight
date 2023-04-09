@@ -5,213 +5,237 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Т47
+namespace CSharpLight
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Battlefield battlefield = new Battlefield();
-            battlefield.Battle();
+            Field field = new Field();
+            Console.WriteLine("Симуляция боя сил Тьмы и Света, для начала любую клавишу");
+            Console.ReadKey();
+            field.Battle();
+            field.ShowBattleResult();
         }
     }
 
-    class Battlefield
+    class Field
     {
-        private Platoon _platoonLight = new Platoon();
-        private Platoon _platoonDark = new Platoon();
-        private Soldier _firstSolider;
-        private Soldier _secondSolider;
+        private Platoon _firsPlatoon = new Platoon();
+        private Platoon _secondPlatoon = new Platoon();
+        private Soldier _firstSoldier;
+        private Soldier _secondSoldier;
 
         public void Battle()
         {
-            Console.WriteLine("Бой сил Света и Тьмы, Нажмите любую кнопку для начала битвы!");
-            Console.ReadKey();
-
-            while (_platoonLight.GetCountSoldiers() > 0 && _platoonDark.GetCountSoldiers() > 0)
+            while (_firsPlatoon.GetCountSoliders() > 0 && _secondPlatoon.GetCountSoliders() > 0)
             {
-                _firstSolider = _platoonLight.GetSoldierFromPlatoon();
-                _secondSolider = _platoonDark.GetSoldierFromPlatoon();
-                _platoonLight.ShowPlatoon();
-                _platoonDark.ShowPlatoon();
-                _firstSolider.TakeDamage(_secondSolider.Damage);
-                _secondSolider.TakeDamage(_firstSolider.Damage);
-                _firstSolider.UseSpecialAttack();
-                _secondSolider.UseSpecialAttack();
-                RemoveSolider();
-                System.Threading.Thread.Sleep(1000);                
-                Console.Clear();            
-            }
-
-            ShowBattleResult();
-        }
-
-        private void ShowBattleResult()
-        {
-            if (_platoonLight.GetCountSoldiers() > 0 && _platoonDark.GetCountSoldiers() > 0)
-            {
-                Console.WriteLine("Ничья, оба взвода погибли!!!");
-            }
-            else if (_platoonLight.GetCountSoldiers() <= 0)
-            {
-                Console.WriteLine("Взвод сил Тьмы победил!!!");
-            }
-            else if (_platoonDark.GetCountSoldiers() <= 0)
-            {
-                Console.WriteLine("Взвод сил Света победил!!!");
+                _firstSoldier = _firsPlatoon.GetSoldierToBattle();
+                _secondSoldier = _secondPlatoon.GetSoldierToBattle();
+                _firsPlatoon.ShowInfo();
+                _secondPlatoon.ShowInfo();
+                _firstSoldier.Attack(_secondSoldier);
+                _secondSoldier.Attack(_firstSoldier);
+                DeliteDeadSoldier();
+                System.Threading.Thread.Sleep(1000);
+                Console.Clear();
             }
         }
 
-        private void RemoveSolider()
+        public void ShowBattleResult()
         {
-            if (_firstSolider.Health <= 0)
+            if (_firsPlatoon.GetCountSoliders() <= 0 && _secondPlatoon.GetCountSoliders() <= 0)
             {
-                _platoonLight.RemoveSoldierFromPlatoon(_firstSolider);
+                Console.WriteLine("Ничья, оба взвода погибли");
             }
+            else if (_firsPlatoon.GetCountSoliders() <= 0)
+            {               
+                Console.WriteLine("Взвод сил Света победил!");
+            }
+            else
+            {               
+                Console.WriteLine("Взвод сил Тьмы победил!");
+            }
+        }
 
-            if (_secondSolider.Health <= 0)
+        private void DeliteDeadSoldier()
+        {
+            if (_firstSoldier.Health <= 0)
             {
-                _platoonDark.RemoveSoldierFromPlatoon(_secondSolider);
+                _firsPlatoon.RemoveSoldier(_firstSoldier);
+            }
+            if (_secondSoldier.Health <= 0)
+            {
+                _secondPlatoon.RemoveSoldier(_secondSoldier);
             }
         }
     }
 
     class Platoon
     {
-        private List<Soldier> _soldiers = new List<Soldier>();
         private static Random _random = new Random();
+        private List<Soldier> _soldiers = new List<Soldier>();
+
+        private List<Soldier> _typeSoldiers = new List<Soldier>
+        {
+            new Sniper("Снайпер", 50, 100),
+            new Engineer("Инженер", 45, 100),
+            new Medic("Медик", 40, 100)
+        };
 
         public Platoon()
         {
-            CreateNewPlatoon(10, _soldiers);
+            int countSoldiers = 10;
+            Create(countSoldiers, _soldiers, _typeSoldiers);
         }
 
-        public void ShowPlatoon()
-        {
-            Console.WriteLine("Взвод");
-
-            foreach (var soldier in _soldiers)
-            {
-                Console.WriteLine($"{soldier.Name}. Здоровье : {soldier.Health}. Урон : {soldier.Damage}.");
-            }
-        }
-
-        public void RemoveSoldierFromPlatoon(Soldier soldier)
+        public void RemoveSoldier(Soldier soldier)
         {
             _soldiers.Remove(soldier);
         }
 
-        public Soldier GetSoldierFromPlatoon()
+        public void ShowInfo()
         {
-            return _soldiers[_random.Next(0, _soldiers.Count)];
+            Console.WriteLine(" Взвод ");
+
+            foreach (var solider in _soldiers)
+            {
+                Console.WriteLine($"{solider.Name}. Здоровье: {solider.Health}. Урон: {solider.Damage}.");
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public int GetCountSoldiers()
+        public int GetCountSoliders()
         {
             return _soldiers.Count;
         }
 
-        private void CreateNewPlatoon(int numbeersOfSoldiers, List<Soldier> soldier)
+        public Soldier GetSoldierToBattle()
         {
-            for (int i = 0; i < numbeersOfSoldiers; i++)
+            return _soldiers[_random.Next(0, _soldiers.Count)];
+        }
+
+        private void Create(int countSoldiers, List<Soldier> soldiers, List<Soldier> typeSoldiers)
+        {
+            for (int i = 0; i < countSoldiers; i++)
             {
-                soldier.Add(GetSoldier());
+                soldiers.Add(CreateSoldier(typeSoldiers));
             }
         }
 
-        private Soldier GetSoldier()
+        private Soldier CreateSoldier(List<Soldier> typeSoldiers)
         {
-            int minimumNumbersSoldier = 0;
-            int maximumNumberSoldier = 3;
+            int minimumNumberClassSolider = 0;
+            int maximumNumberClassSolider = 3;
+            int newSolider = _random.Next(minimumNumberClassSolider, maximumNumberClassSolider);
 
-            int newSoldier = _random.Next(minimumNumbersSoldier, maximumNumberSoldier);
+            for (int i = 0; i < typeSoldiers.Count; i++)
+            {
+                if (newSolider == i)
+                {
+                    Soldier soldier = new Soldier(typeSoldiers[i].Name, typeSoldiers[i].Damage, typeSoldiers[i].Health);
+                    return soldier;
+                }
+            }
 
-            if (newSoldier == 1)
-            {
-                return new Sniper("Снайпер", 100, 50);
-            }
-            else if (newSoldier == 2)
-            {
-                return new GrenadeLauncher("Гранатометчик", 100, 60);
-            }
-            else
-            {
-                return new Medic("Медик", 100, 45);
-            }
+            return null;
         }
     }
 
     class Soldier
     {
-        public Soldier(string name, int health, int damage)
+        private static Random _random = new Random();
+
+        public Soldier(string name, int damage, int health)
         {
             Name = name;
-            Health = health;
             Damage = damage;
+            Health = health;
         }
 
         public string Name { get; protected set; }
         public int Damage { get; protected set; }
         public int Health { get; protected set; }
 
-        public void TakeDamage(int damageSoldier)
+        public void Attack(Soldier soldier)
         {
-            Health -= damageSoldier;
-            Console.WriteLine($"\n{Name} нанес - {damageSoldier} урона !");
-        }
-
-        public void UseSpecialAttack()
-        {
-            Random random = new Random();
-            int MaximalNumber = 100;
-            int chanceUsingAbility = random.Next(MaximalNumber);
-            int chanceAbillity = 10;
-
-            if (chanceUsingAbility < chanceAbillity)
+            if (CanUseSpecialAttack(soldier))
             {
-                UsePower();
+                UseFeature(soldier);
+            }
+            else
+            {
+                soldier.TakeDamage(Damage);
             }
         }
 
-        protected virtual void UsePower() { }
+        public bool CanUseSpecialAttack(Soldier soldier)
+        {
+            int rangeMaximalNumbers = 100;
+            int chanceUsingAbility = _random.Next(rangeMaximalNumbers);
+            int chanceAbility = 100;
+            return chanceUsingAbility <= chanceAbility;
+        }
+
+        public virtual void TakeDamage(int damageSolider)
+        {
+            Health -= damageSolider;
+            Console.WriteLine();
+            Console.WriteLine($"{Name} нанес {Damage} урона, а получил {damageSolider} урона");
+        }
+
+        protected virtual void UseFeature(Soldier soldier)
+        {
+            Health -= soldier.Damage;
+            Console.WriteLine();
+            Console.WriteLine($"{Name} нанес {Damage} урона, а получил {soldier.Damage} урона");
+        }
     }
+
 
     class Sniper : Soldier
     {
-        private int _damageBuff = 10;
+        private int _damageBuff = 100;
+        public Sniper(string name, int damage, int health) : base(name, damage, health) { }
 
-        public Sniper(string name, int health, int damage) : base(name, health, damage) { }
-
-        protected override void UsePower()
+        protected override void UseFeature(Soldier soldier)
         {
-            Console.WriteLine($"{Name} делает глубойкий вдох, задерживает дыхание и стреляет точнее !");
             Damage += _damageBuff;
+            Health -= soldier.Damage;
+            Console.WriteLine($"\n{Name} выстрелил точно в голову, урона  нанесено {Damage} ");
+        }
+    }
+
+    class Engineer : Soldier
+    {
+
+        public Engineer(string name, int damage, int health) : base(name, damage, health) { }
+
+        public override void TakeDamage(int damageSolider)
+        {
+            int damageReduction = 2;
+            int blockedDamage = damageSolider / damageReduction;
+            Health -= damageSolider / damageReduction;
+            Console.WriteLine($"\nИнженер наносит {Damage} урона , ставит щит блокируя урон , заблокировано {blockedDamage}");
         }
     }
 
     class Medic : Soldier
     {
-        private int _damageBuff = 100;
+        public Medic(string name, int damage, int health) : base(name, damage, health) { }
 
-        public Medic (string name, int health, int damage) : base (name, health, damage) { }
-
-        protected override void UsePower()
+        protected override void UseFeature(Soldier soldier)
         {
-            Console.WriteLine($"{Name} Достает дефибрилятор и поражает противника эл.током !");
-            Damage += _damageBuff;
-        }
-    }
+            int healthBuff = 50;
+            int maxHealth = 100;
 
-    class GrenadeLauncher : Soldier
-    {
-        private int _damageBuff = 100;
-
-        public GrenadeLauncher(string name, int health, int damage) : base(name, health, damage) { }
-
-        protected override void UsePower()
-        {
-            Console.WriteLine($"{Name} Стреляет с гранатомета и наносит большой урон!");
-            Damage += _damageBuff;
+            if (Health < maxHealth)
+            {
+                Console.WriteLine($"{Name} перебинтовывается , увеличивая здоровье");
+                Health += healthBuff;
+                base.TakeDamage(Damage);
+            }
         }
     }
 }
