@@ -21,8 +21,8 @@ namespace CSharpLight
 
     class Field
     {
-        private Platoon _firsPlatoon = new Platoon();
-        private Platoon _secondPlatoon = new Platoon();
+        private Platoon _firsPlatoon = new Platoon("Сил Тьмы");
+        private Platoon _secondPlatoon = new Platoon("Сил Света");
         private Soldier _firstSoldier;
         private Soldier _secondSoldier;
 
@@ -32,10 +32,14 @@ namespace CSharpLight
             {
                 _firstSoldier = _firsPlatoon.GetSoldierToBattle();
                 _secondSoldier = _secondPlatoon.GetSoldierToBattle();
+
                 _firsPlatoon.ShowInfo();
+                Console.WriteLine(new string('-',40));
                 _secondPlatoon.ShowInfo();
+
                 _firstSoldier.Attack(_secondSoldier);
                 _secondSoldier.Attack(_firstSoldier);
+
                 DeliteDeadSoldier();
                 System.Threading.Thread.Sleep(1000);
                 Console.Clear();
@@ -49,11 +53,11 @@ namespace CSharpLight
                 Console.WriteLine("Ничья, оба взвода погибли");
             }
             else if (_firsPlatoon.GetCountSoliders() <= 0)
-            {               
+            {
                 Console.WriteLine("Взвод сил Света победил!");
             }
             else
-            {               
+            {
                 Console.WriteLine("Взвод сил Тьмы победил!");
             }
         }
@@ -71,22 +75,46 @@ namespace CSharpLight
         }
     }
 
+    class PlatoonCreator
+    {
+        private static Random _random = new Random();
+
+        private List<Soldier> _soldiers = new List<Soldier>()
+        {
+            new Soldier("Снайпер", 50, 100),
+            new Soldier("Инжeнер", 45, 100),
+            new Soldier("Медик", 40, 100),
+        };
+
+        public List<Soldier> CreateSoldiers()
+        {
+            int maxCount = 10;
+            int minCount = 9;
+            int count = _random.Next(minCount, maxCount + 1);
+
+            List<Soldier> newSoldiers = new List<Soldier>();
+
+            for (int i = 0; i < count; i++)
+            {
+                Soldier soldier = new Soldier (_soldiers[_random.Next(_soldiers.Count)]);
+                newSoldiers.Add(soldier);
+            }
+
+            return newSoldiers;
+        }
+    }
+
     class Platoon
     {
         private static Random _random = new Random();
         private List<Soldier> _soldiers = new List<Soldier>();
+        private string _name;
 
-        private List<Soldier> _typeSoldiers = new List<Soldier>
+        public Platoon(string name)
         {
-            new Sniper("Снайпер", 50, 100),
-            new Engineer("Инженер", 45, 100),
-            new Medic("Медик", 40, 100)
-        };
-
-        public Platoon()
-        {
-            int countSoldiers = 10;
-            Create(countSoldiers, _soldiers, _typeSoldiers);
+            PlatoonCreator creator = new PlatoonCreator();
+            _soldiers = creator.CreateSoldiers();
+            _name = name;
         }
 
         public void RemoveSoldier(Soldier soldier)
@@ -96,7 +124,7 @@ namespace CSharpLight
 
         public void ShowInfo()
         {
-            Console.WriteLine(" Взвод ");
+            Console.WriteLine($"Взвод {_name}");
 
             foreach (var solider in _soldiers)
             {
@@ -115,32 +143,6 @@ namespace CSharpLight
         {
             return _soldiers[_random.Next(0, _soldiers.Count)];
         }
-
-        private void Create(int countSoldiers, List<Soldier> soldiers, List<Soldier> typeSoldiers)
-        {
-            for (int i = 0; i < countSoldiers; i++)
-            {
-                soldiers.Add(CreateSoldier(typeSoldiers));
-            }
-        }
-
-        private Soldier CreateSoldier(List<Soldier> typeSoldiers)
-        {
-            int minimumNumberClassSolider = 0;
-            int maximumNumberClassSolider = 3;
-            int newSolider = _random.Next(minimumNumberClassSolider, maximumNumberClassSolider);
-
-            for (int i = 0; i < typeSoldiers.Count; i++)
-            {
-                if (newSolider == i)
-                {
-                    Soldier soldier = new Soldier(typeSoldiers[i].Name, typeSoldiers[i].Damage, typeSoldiers[i].Health);
-                    return soldier;
-                }
-            }
-
-            return null;
-        }
     }
 
     class Soldier
@@ -152,6 +154,13 @@ namespace CSharpLight
             Name = name;
             Damage = damage;
             Health = health;
+        }
+
+        public Soldier(Soldier soldier)
+        {
+            Name = soldier.Name;
+            Damage = soldier.Damage;
+            Health = soldier.Health;
         }
 
         public string Name { get; protected set; }
@@ -170,11 +179,11 @@ namespace CSharpLight
             }
         }
 
-        public bool CanUseSpecialAttack(Soldier soldier)
+        public virtual bool CanUseSpecialAttack(Soldier soldier)
         {
             int rangeMaximalNumbers = 100;
             int chanceUsingAbility = _random.Next(rangeMaximalNumbers);
-            int chanceAbility = 100;
+            int chanceAbility = 34;
             return chanceUsingAbility <= chanceAbility;
         }
 
@@ -192,7 +201,6 @@ namespace CSharpLight
             Console.WriteLine($"{Name} нанес {Damage} урона, а получил {soldier.Damage} урона");
         }
     }
-
 
     class Sniper : Soldier
     {
