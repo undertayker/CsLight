@@ -34,13 +34,13 @@ namespace CSharpLight
                 _secondSoldier = _secondPlatoon.GetSoldierToBattle();
 
                 _firsPlatoon.ShowInfo();
-                Console.WriteLine(new string('-',40));
+                Console.WriteLine(new string('-', 40));
                 _secondPlatoon.ShowInfo();
 
                 _firstSoldier.Attack(_secondSoldier);
                 _secondSoldier.Attack(_firstSoldier);
 
-                DeliteDeadSoldier();
+                DeliteDeadSoldiers();
                 System.Threading.Thread.Sleep(1000);
                 Console.Clear();
             }
@@ -62,7 +62,7 @@ namespace CSharpLight
             }
         }
 
-        private void DeliteDeadSoldier()
+        private void DeliteDeadSoldiers()
         {
             if (_firstSoldier.Health <= 0)
             {
@@ -79,12 +79,14 @@ namespace CSharpLight
     {
         private static Random _random = new Random();
 
-        private List<Soldier> _soldiers = new List<Soldier>()
+        private List<Soldier> _soldiers = new List<Soldier>();
+
+        public PlatoonCreator()
         {
-            new Soldier("Снайпер", 50, 100),
-            new Soldier("Инжeнер", 45, 100),
-            new Soldier("Медик", 40, 100),
-        };
+            _soldiers.Add(new Sniper("Снайпер", 50, 100));
+            _soldiers.Add(new Engineer("Инжeнер", 45, 100));
+            _soldiers.Add(new Medic("Медик", 40, 100));
+        }
 
         public List<Soldier> CreateSoldiers()
         {
@@ -96,7 +98,7 @@ namespace CSharpLight
 
             for (int i = 0; i < count; i++)
             {
-                Soldier soldier = new Soldier (_soldiers[_random.Next(_soldiers.Count)]);
+                Soldier soldier = _soldiers[_random.Next(_soldiers.Count)].Clone();
                 newSoldiers.Add(soldier);
             }
 
@@ -156,11 +158,11 @@ namespace CSharpLight
             Health = health;
         }
 
-        public Soldier(Soldier soldier)
+        public Soldier()
         {
-            Name = soldier.Name;
-            Damage = soldier.Damage;
-            Health = soldier.Health;
+            Name = "Дух";
+            Damage = 0;
+            Health = 1;
         }
 
         public string Name { get; protected set; }
@@ -187,6 +189,11 @@ namespace CSharpLight
             return chanceUsingAbility <= chanceAbility;
         }
 
+        public virtual Soldier Clone()
+        {
+            return new Soldier();
+        }
+
         public virtual void TakeDamage(int damageSolider)
         {
             Health -= damageSolider;
@@ -207,10 +214,15 @@ namespace CSharpLight
         private int _damageBuff = 100;
         public Sniper(string name, int damage, int health) : base(name, damage, health) { }
 
+        public override Soldier Clone()
+        {
+            return new Sniper("Снайпер", 50, 100);
+        }
+
         protected override void UseFeature(Soldier soldier)
         {
             Damage += _damageBuff;
-            Health -= soldier.Damage;
+            Health -= Damage;
             Console.WriteLine($"\n{Name} выстрелил точно в голову, урона  нанесено {Damage} ");
         }
     }
@@ -219,6 +231,11 @@ namespace CSharpLight
     {
 
         public Engineer(string name, int damage, int health) : base(name, damage, health) { }
+
+        public override Soldier Clone()
+        {
+            return new Engineer("Инженер", 45, 100);
+        }
 
         public override void TakeDamage(int damageSolider)
         {
@@ -232,6 +249,11 @@ namespace CSharpLight
     class Medic : Soldier
     {
         public Medic(string name, int damage, int health) : base(name, damage, health) { }
+
+        public override Soldier Clone()
+        {
+            return new Medic("Медик", 40, 100);
+        }
 
         protected override void UseFeature(Soldier soldier)
         {
