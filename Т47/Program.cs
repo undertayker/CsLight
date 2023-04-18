@@ -132,8 +132,6 @@ namespace CSharpLight
             {
                 Console.WriteLine($"{solider.Name}. Здоровье: {solider.Health}. Урон: {solider.Damage}.");
             }
-
-            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public int GetCountSoliders()
@@ -169,24 +167,17 @@ namespace CSharpLight
         public int Damage { get; protected set; }
         public int Health { get; protected set; }
 
-        public void Attack(Soldier soldier)
+        public virtual void Attack(Soldier soldier)
         {
-            if (CanUseSpecialAttack(soldier))
-            {
-                UseFeature(soldier);
-            }
-            else
-            {
-                soldier.TakeDamage(Damage);
-            }
+            soldier.TakeDamage(Damage);
         }
 
-        public virtual bool CanUseSpecialAttack(Soldier soldier)
+        public virtual bool CanUseSkill(int percent)
         {
-            int rangeMaximalNumbers = 100;
-            int chanceUsingAbility = _random.Next(rangeMaximalNumbers);
-            int chanceAbility = 34;
-            return chanceUsingAbility <= chanceAbility;
+            int maxSkillChance = 100;
+            int chance = _random.Next(maxSkillChance + 1);
+
+            return percent > chance;
         }
 
         public virtual Soldier Clone()
@@ -194,24 +185,19 @@ namespace CSharpLight
             return new Soldier();
         }
 
-        public virtual void TakeDamage(int damageSolider)
+        public virtual void TakeDamage(int damageSoldier)
         {
-            Health -= damageSolider;
+            Health -= damageSoldier;
             Console.WriteLine();
-            Console.WriteLine($"{Name} нанес {Damage} урона, а получил {damageSolider} урона");
-        }
-
-        protected virtual void UseFeature(Soldier soldier)
-        {
-            Health -= soldier.Damage;
-            Console.WriteLine();
-            Console.WriteLine($"{Name} нанес {Damage} урона, а получил {soldier.Damage} урона");
+            Console.WriteLine($"{Name} нанес {Damage} урона, а получил {damageSoldier} урона");
         }
     }
 
     class Sniper : Soldier
     {
-        private int _damageBuff = 100;
+        private int _specialSkillChance = 34;
+        private int _damageBuff = 40;
+
         public Sniper(string name, int damage, int health) : base(name, damage, health) { }
 
         public override Soldier Clone()
@@ -219,16 +205,23 @@ namespace CSharpLight
             return new Sniper("Снайпер", 50, 100);
         }
 
-        protected override void UseFeature(Soldier soldier)
+        public override void Attack(Soldier soldier)
         {
-            Damage += _damageBuff;
-            Health -= Damage;
-            Console.WriteLine($"\n{Name} выстрелил точно в голову, урона  нанесено {Damage} ");
+            if (CanUseSkill(_specialSkillChance))
+            {
+                Console.WriteLine($"\n{Name} выстрелил точно в голову, урона  нанесено {Damage} ");
+                Damage += _damageBuff;
+            }
+            else
+            {
+                base.Attack(soldier);
+            }
         }
     }
 
     class Engineer : Soldier
     {
+        private int _dodgeChance = 34;
 
         public Engineer(string name, int damage, int health) : base(name, damage, health) { }
 
@@ -241,13 +234,24 @@ namespace CSharpLight
         {
             int damageReduction = 2;
             int blockedDamage = damageSolider / damageReduction;
-            Health -= damageSolider / damageReduction;
-            Console.WriteLine($"\nИнженер наносит {Damage} урона , ставит щит блокируя урон , заблокировано {blockedDamage}");
+
+            if (CanUseSkill(_dodgeChance))
+            {
+                Health -= damageSolider / damageReduction;
+                Console.WriteLine($"\nИнженер ставит щит блокируя урон , заблокировано {blockedDamage}");
+            }
+            else
+            {
+                base.TakeDamage(damageSolider);
+            }
         }
     }
 
     class Medic : Soldier
     {
+        private int _healthBuff = 20;
+        private int _chanceToHeal = 34;
+
         public Medic(string name, int damage, int health) : base(name, damage, health) { }
 
         public override Soldier Clone()
@@ -255,16 +259,16 @@ namespace CSharpLight
             return new Medic("Медик", 40, 100);
         }
 
-        protected override void UseFeature(Soldier soldier)
+        public override void TakeDamage(int damageSolider)
         {
-            int healthBuff = 50;
-            int maxHealth = 100;
-
-            if (Health < maxHealth)
+            if (CanUseSkill(_chanceToHeal))
             {
                 Console.WriteLine($"{Name} перебинтовывается , увеличивая здоровье");
-                Health += healthBuff;
-                base.TakeDamage(Damage);
+                Health += _healthBuff;
+            }
+            else
+            {
+                base.TakeDamage(damageSolider);
             }
         }
     }
