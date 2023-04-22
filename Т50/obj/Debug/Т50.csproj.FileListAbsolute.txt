@@ -1,0 +1,8 @@
+D:\IJunior\CSLight\Т50\bin\Debug\Т50.exe.config
+D:\IJunior\CSLight\Т50\bin\Debug\Т50.exe
+D:\IJunior\CSLight\Т50\bin\Debug\Т50.pdb
+D:\IJunior\CSLight\Т50\obj\Debug\Т50.csproj.AssemblyReference.cache
+D:\IJunior\CSLight\Т50\obj\Debug\Т50.csproj.SuggestedBindingRedirects.cache
+D:\IJunior\CSLight\Т50\obj\Debug\Т50.csproj.CoreCompileInputs.cache
+D:\IJunior\CSLight\Т50\obj\Debug\Т50.exe
+D:\IJunior\CSLight\Т50\obj\Debug\Т50.pdb
