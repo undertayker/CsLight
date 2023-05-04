@@ -1,0 +1,8 @@
+D:\IJunior\CSLight\T53\bin\Debug\T53.exe.config
+D:\IJunior\CSLight\T53\bin\Debug\T53.exe
+D:\IJunior\CSLight\T53\bin\Debug\T53.pdb
+D:\IJunior\CSLight\T53\obj\Debug\T53.csproj.AssemblyReference.cache
+D:\IJunior\CSLight\T53\obj\Debug\T53.csproj.SuggestedBindingRedirects.cache
+D:\IJunior\CSLight\T53\obj\Debug\T53.csproj.CoreCompileInputs.cache
+D:\IJunior\CSLight\T53\obj\Debug\T53.exe
+D:\IJunior\CSLight\T53\obj\Debug\T53.pdb
