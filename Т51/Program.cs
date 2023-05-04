@@ -65,7 +65,6 @@ namespace Т51
                         Console.WriteLine("Некорректный ввод!!!");
                         break;
                 }
-
             }
         }
 
@@ -82,9 +81,11 @@ namespace Т51
             Console.Write("Введите национальность подозреваемого :");
             nationality = Console.ReadLine();
 
-            var filteredCriminals = from Criminal criminal in _criminals where criminal.Height == height 
+            var filteredCriminals = from Criminal criminal in _criminals
+                                    where criminal.Height == height
                                     && criminal.Weight == weight && criminal.Nationality == nationality
-                                    && criminal.Guarded == notTakenIntoCustody select criminal;
+                                    && criminal.Guarded == notTakenIntoCustody
+                                    select criminal;
 
             foreach (var criminal in filteredCriminals)
             {
