@@ -43,10 +43,9 @@ namespace T52
 
             var filteredCriminals =  from Criminal criminal in _criminals where criminal.Offence != nonpaymentTaxes select criminal;
 
-            foreach (var criminal in filteredCriminals)
-            {
-                criminal.ShowCriminal();
-            }
+            _criminals = filteredCriminals.ToList();
+            
+            ShowCriminals();
         }
 
         private void ShowCriminals()
