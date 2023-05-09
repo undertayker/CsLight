@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace T52
 {
@@ -32,20 +30,19 @@ namespace T52
         {
             Console.WriteLine("Добро пожаловать в Информационный центр\nСписок приступников до амнистии");
             ShowCriminals();
+
             Console.WriteLine("\nНажмите любую клавишу что бы посмотреть список приступников после амнистии\n");
             Console.ReadKey();
-            AmnestyCriminals();            
+
+            AmnestyCriminals();
+            ShowCriminals();
         }
 
         private void AmnestyCriminals()
         {
             string nonpaymentTaxes = "Антиправительственное преступление";
 
-            var filteredCriminals =  from Criminal criminal in _criminals where criminal.Offence != nonpaymentTaxes select criminal;
-
-            _criminals = filteredCriminals.ToList();
-            
-            ShowCriminals();
+            _criminals = (from Criminal criminal in _criminals where criminal.Offence != nonpaymentTaxes select criminal).ToList();
         }
 
         private void ShowCriminals()
