@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace T53
 {
@@ -63,11 +61,11 @@ namespace T53
                         break;
 
                     case SortByName:
-                        SortAllSickByName();
+                        ShowSortAllSickByName();
                         break;
 
                     case SortByYears:
-                        SortAllSickByYears();
+                        ShowSortAllSickByYears();
                         break;
 
                     case SickSpecificDisease:
@@ -85,23 +83,23 @@ namespace T53
             }
         }
 
-        private void SortAllSickByName()
+        private void ShowSortAllSickByName()
         {
             var orderSickByName = _sick.OrderBy(sick => sick.Name);
 
             foreach (var sick in orderSickByName)
             {
-                Console.WriteLine(sick.Name);
+                sick.ShowInfo();
             }
         }
 
-        private void SortAllSickByYears()
+        private void ShowSortAllSickByYears()
         {
             var orderSickByYears = _sick.OrderBy(sick => sick.Years);
 
             foreach (var sick in orderSickByYears)
             {
-                Console.WriteLine(sick.Years);
+                sick.ShowInfo();
             }
         }
 
