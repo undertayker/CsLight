@@ -1,0 +1,8 @@
+D:\IJunior\CSLight\Т54\bin\Debug\Т54.exe.config
+D:\IJunior\CSLight\Т54\bin\Debug\Т54.exe
+D:\IJunior\CSLight\Т54\bin\Debug\Т54.pdb
+D:\IJunior\CSLight\Т54\obj\Debug\Т54.csproj.AssemblyReference.cache
+D:\IJunior\CSLight\Т54\obj\Debug\Т54.csproj.SuggestedBindingRedirects.cache
+D:\IJunior\CSLight\Т54\obj\Debug\Т54.csproj.CoreCompileInputs.cache
+D:\IJunior\CSLight\Т54\obj\Debug\Т54.exe
+D:\IJunior\CSLight\Т54\obj\Debug\Т54.pdb
