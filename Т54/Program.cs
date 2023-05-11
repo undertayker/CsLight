@@ -41,13 +41,13 @@ namespace Т54
             bool isWorkink = true;
             string userInput;
 
-            Console.WriteLine("Добро пожаловать в информационный центр статистики играков!!");
+            Console.WriteLine("Добро пожаловать в информационный центр статистики игроков!!");
 
             while (isWorkink)
             {
                 Console.WriteLine($"\n{ShowAllPlayersCommand} - Для просмотра всех игроков" +
-                    $"\n{ShowTopLevelPlayersCommand} - Для просмотра топ 3 играков по уровню" +
-                    $"\n{ShowTopStrongPlayerCommand} - Для просмотра топ 3 играков по силе" +
+                    $"\n{ShowTopLevelPlayersCommand} - Для просмотра топ 3 игроков по уровню" +
+                    $"\n{ShowTopStrongPlayerCommand} - Для просмотра топ 3 игроков по силе" +
                     $"\n{ExitCommand} - Для выхода из информационного центра ");
 
                 userInput = Console.ReadLine();
@@ -55,7 +55,7 @@ namespace Т54
                 switch (userInput)
                 {
                     case ShowAllPlayersCommand:
-                        ShowPlayer();
+                        ShowInfos(_players);
                         break;
 
                     case ShowTopLevelPlayersCommand:
@@ -79,8 +79,13 @@ namespace Т54
 
         private void ShowSortAllPlayerByLevel()
         {
-            var filteredPlayerByLevel = _players.Where(player => player.Level > 200).OrderByDescending(player => player.Level);
+            var filteredPlayerByLevel = _players.OrderByDescending(player => player.Level).Take(3);
 
+            ShowInfos(filteredPlayerByLevel);
+        }
+
+        private static void ShowInfos(IEnumerable<Player> filteredPlayerByLevel)
+        {
             foreach (var player in filteredPlayerByLevel)
             {
                 player.ShowInfo();
@@ -89,20 +94,9 @@ namespace Т54
 
         private void ShowSortAllPlayerByStrong()
         {
-            var filteredPlayerByStrong = _players.Where(player => player.Strong > 200).OrderByDescending(player => player.Strong);
+            var filteredPlayerByStrong = _players.OrderByDescending(player => player.Strong).Take(3);
 
-            foreach (var player in filteredPlayerByStrong)
-            {
-                player.ShowInfo();
-            }
-        }
-
-        private void ShowPlayer()
-        {
-            foreach (var player in _players)
-            {
-                player.ShowInfo();
-            }
+            ShowInfos(filteredPlayerByStrong);
         }
     }
 
