@@ -14,13 +14,7 @@ namespace T53
     }
 
     class Hospital
-    {
-        const string ShowAllSick = "1";
-        const string SortByName = "2";
-        const string SortByYears = "3";
-        const string SickSpecificDisease = "4";
-        const string Exit = "5";
-
+    { 
         private List<Sick> _sick = new List<Sick>();
 
         public Hospital()
@@ -39,6 +33,12 @@ namespace T53
 
         public void Work()
         {
+            const string ShowAllSick = "1";
+            const string SortByName = "2";
+            const string SortByYears = "3";
+            const string SickSpecificDisease = "4";
+            const string Exit = "5";
+
             bool isWork = true;
             string userInput;
 
@@ -57,7 +57,7 @@ namespace T53
                 switch (userInput)
                 {
                     case ShowAllSick:
-                        ShowSick();
+                        ShowInfos(_sick);
                         break;
 
                     case SortByName:
@@ -87,17 +87,19 @@ namespace T53
         {
             var orderSickByName = _sick.OrderBy(sick => sick.Name);
 
-            foreach (var sick in orderSickByName)
-            {
-                sick.ShowInfo();
-            }
+            ShowInfos(orderSickByName);
         }
 
         private void ShowSortAllSickByYears()
         {
             var orderSickByYears = _sick.OrderBy(sick => sick.Years);
 
-            foreach (var sick in orderSickByYears)
+            ShowInfos(orderSickByYears);
+        }
+
+        private static void ShowInfos(IEnumerable<Sick> sicksCollection)
+        {
+            foreach (var sick in sicksCollection)
             {
                 sick.ShowInfo();
             }
@@ -112,18 +114,7 @@ namespace T53
 
             var orderSickByDisease = from Sick sick in _sick where sick.Disease == disease select sick;
 
-            foreach (var sick in orderSickByDisease)
-            {
-                sick.ShowInfo();
-            }
-        }
-
-        private void ShowSick()
-        {
-            foreach (var sick in _sick)
-            {
-                sick.ShowInfo();
-            }
+            ShowInfos(orderSickByDisease);
         }
     }
 
