@@ -15,11 +15,6 @@ namespace Т54
 
     class Stats
     {
-        const string ShowAllPlayersCommand = "1";
-        const string ShowTopLevelPlayersCommand = "2";
-        const string ShowTopStrongPlayerCommand = "3";
-        const string ExitCommand = "4";
-
        private List<Player> _players = new List<Player>();
 
         public Stats()
@@ -38,6 +33,11 @@ namespace Т54
 
         public void Work()
         {
+            const string ShowAllPlayersCommand = "1";
+            const string ShowTopLevelPlayersCommand = "2";
+            const string ShowTopStrongPlayerCommand = "3";
+            const string ExitCommand = "4";
+
             bool isWorkink = true;
             string userInput;
 
