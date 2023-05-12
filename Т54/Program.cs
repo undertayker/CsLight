@@ -55,15 +55,15 @@ namespace Т54
                 switch (userInput)
                 {
                     case ShowAllPlayersCommand:
-                        ShowInfos(_players);
+                        ShowInfoPlayer(_players);
                         break;
 
                     case ShowTopLevelPlayersCommand:
-                        ShowSortAllPlayerByLevel();
+                        GetTopPlayerByLevel();
                         break;
 
                     case ShowTopStrongPlayerCommand:
-                        ShowSortAllPlayerByStrong();
+                        GetTopPlayerByStrong();
                         break;
 
                     case ExitCommand:
@@ -77,14 +77,16 @@ namespace Т54
             }
         }
 
-        private void ShowSortAllPlayerByLevel()
+        private void GetTopPlayerByLevel()
         {
-            var filteredPlayerByLevel = _players.OrderByDescending(player => player.Level).Take(3);
+            int topLevel = 3;
 
-            ShowInfos(filteredPlayerByLevel);
+            var filteredPlayerByLevel = _players.OrderByDescending(player => player.Level).Take(topLevel);
+
+            ShowInfoPlayer(filteredPlayerByLevel);
         }
 
-        private static void ShowInfos(IEnumerable<Player> filteredPlayerByLevel)
+        private static void ShowInfoPlayer(IEnumerable<Player> filteredPlayerByLevel)
         {
             foreach (var player in filteredPlayerByLevel)
             {
@@ -92,11 +94,13 @@ namespace Т54
             }
         }
 
-        private void ShowSortAllPlayerByStrong()
+        private void GetTopPlayerByStrong()
         {
-            var filteredPlayerByStrong = _players.OrderByDescending(player => player.Strong).Take(3);
+            int topStrong = 3;
 
-            ShowInfos(filteredPlayerByStrong);
+            var filteredPlayerByStrong = _players.OrderByDescending(player => player.Strong).Take(topStrong);
+
+            ShowInfoPlayer(filteredPlayerByStrong);
         }
     }
 
