@@ -39,11 +39,11 @@ namespace Т56
 
         private void AbbreviatedInformationSoldier()
         {
-            var abbreviatedInformation = from Soldier soldier in _soldiers select new {name = soldier.Name, rank = soldier.Rank};
+            var abbreviatedInformation = from Soldier soldier in _soldiers select new {Name = soldier.Name, Rank = soldier.Rank};
 
             foreach (var soldier in abbreviatedInformation)
             {
-                Console.WriteLine($"{soldier.name} , Звание - {soldier.rank}");
+                Console.WriteLine($"{soldier.Name} , Звание - {soldier.Rank}");
             }
         }
 
