@@ -52,6 +52,8 @@ namespace Т57
 
             var unionTwoTeams = _secondDachmentSoldier.Union(selectSoldiers);
 
+            _firstDachmentSoldier = _firstDachmentSoldier.Except(selectSoldiers).ToList();
+
             ShowInfo(unionTwoTeams);
         }
 
